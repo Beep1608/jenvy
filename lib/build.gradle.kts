@@ -6,7 +6,7 @@
  */
  group = "org.jenvy"
 
-version = "0.0.1"
+ version = "0.0.1"
 
 plugins {
     // Apply the java-library plugin for API and implementation separation.
@@ -26,7 +26,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api(libs.commons.math3)
+   // api(libs.commons.math3)
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation(libs.guava)
@@ -38,6 +38,7 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
     withJavadocJar()
+    modularity.inferModulePath = true
 }
 
 javafx {
