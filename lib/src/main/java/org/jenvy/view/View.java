@@ -1,27 +1,51 @@
 package org.jenvy.view;
 
-import org.jenvy.model.Model;
-
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.util.Builder;
 
 public abstract  class View implements Builder<Region> {
 
-    private final StackPane container;
-    private final Model model;
-    public View( Model model, Region ...views){
-        container = new StackPane(views);
-        this.model = model;
+    private  IndexView indexView;
+    private  CreateView createView;
+    private EditView editView;
+    private ShowView showView; 
+
+    private final Pane container;
+
+    public  View (
+        IndexView indexView,  
+        CreateView createView, 
+        EditView editView, 
+        ShowView showView
+    ) 
+    {
+        this.indexView  = indexView;
+        this.createView = createView;
+        this.editView = editView;
+        this.showView = showView;
+
+        this.container = new StackPane(
+            indexView.build(),
+            createView.build(),
+            editView.build(),
+            showView.build()
+        );
     }
-    public View( Model model, Region index , Region create, Region edit){
-        container = new StackPane(index, create, edit);
-        this.model = model;
+    public View(Region ...views){
+
+        this.container = container();
+        container.getChildren().addAll(views);
+    
     }
+
+    protected abstract  Pane container();
 
     @Override
     public Region build() {
-     
-        return  container;
+       
+        return container;
     }
+    
 }
