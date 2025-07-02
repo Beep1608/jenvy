@@ -1,14 +1,64 @@
 package org.jenvy.view;
 
+import java.util.List;
+
+import org.jenvy.dto.Dto;
+import org.jenvy.model.IndexModel;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
 import javafx.util.Builder;
 
-public abstract  class IndexView implements Builder<Region> {
+public abstract  class IndexView<D extends Dto> implements Builder<Region> {
+    private final IndexModel model;
+    private final Button editButton;
+    private final TableView<D> table;
+    public IndexView(IndexModel model){
+        this.model = model;
+        this.editButton = editButton();
+        this.table= createTable();
+    }
 
     @Override
     public Region build() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method in IndexView");
+        throw new UnsupportedOperationException("Unimplemented method in EditView");
     }
+
+    protected TableView<D> createTable(){
+        
+       TableView<D> table = new TableView<>();
+        table.setItems(model.items());
+        table.getColumns().setAll(createColumns());
+        TableColumn<D, Void> editCol = new TableColumn<>("Editar");
+        editCol.setCellFactory(param -> new TableCell<>() {
+        
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                }
+            }
+        });
+
+        return table;
+    }
+
+    protected TableView<D> getTableView(){
+        return table;
+
+        
+    }
+
+    protected abstract  List<TableColumn<D, Object>> createColumns();
+    protected abstract Button editButton();
+    
+    
+    
     
 }
