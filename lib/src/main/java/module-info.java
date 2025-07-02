@@ -6,6 +6,7 @@ module jenvy {
     exports org.jenvy.controller;
     exports org.jenvy.interactor;
     exports org.jenvy.model;
+    exports org.jenvy.dto;
     exports org.jenvy;
     
 }

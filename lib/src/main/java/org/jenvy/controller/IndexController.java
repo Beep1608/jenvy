@@ -1,17 +1,32 @@
 package org.jenvy.controller;
 
+import org.jenvy.interactor.Interactor;
 import org.jenvy.model.IndexModel;
 import org.jenvy.view.IndexView;
 
-public abstract  class IndexController {
-    private final IndexView view;
-    private final IndexModel model;
+import javafx.scene.layout.Region;
+
+public abstract  class IndexController <
+    M extends IndexModel,    
+    V extends IndexView, 
+    I extends Interactor
+> {
+    protected  final V view;
+    protected final M model;
+    protected final I interactor;
     
     public IndexController(){
-        this.view = initView();
         this.model = initModel();
+        this.view = initView();
+       
+        this.interactor = initInteractor();
     }
 
-    protected abstract IndexView initView();
-    protected abstract IndexModel initModel();
+    public Region getView(){
+        return view.build();
+    }
+
+    protected abstract V initView();
+    protected abstract M initModel();
+    protected abstract I initInteractor();
 }

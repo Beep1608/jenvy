@@ -1,12 +1,9 @@
 package org.jenvy.interactor;
 
-import org.jenvy.model.Model;
+import org.jenvy.model.IndexModel;
+public abstract  class Interactor {
+   
 
-public class Interactor {
-    private final Model model;
-
-    public Interactor(Model model){
-        this.model = model;
-    }
+ 
 
 }
