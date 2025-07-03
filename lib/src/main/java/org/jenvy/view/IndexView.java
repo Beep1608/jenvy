@@ -13,10 +13,10 @@ import javafx.scene.layout.Region;
 import javafx.util.Builder;
 
 public abstract  class IndexView<D extends Dto> implements Builder<Region> {
-    protected final IndexModel model;
+    protected final IndexModel<D> model;
     private final Button editButton;
     protected final TableView<D> table;
-    public IndexView(IndexModel model){
+    public IndexView(IndexModel<D> model){
         this.model = model;
         this.editButton = editButton();
         this.table= createTable();
@@ -29,9 +29,9 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
 
     protected TableView<D> createTable(){
         
-       TableView<D> table = new TableView<>();
-        table.setItems(model.items());
-        table.getColumns().setAll(createColumns());
+       TableView<D> table_local = new TableView<>();
+        table_local.setItems(model.items());
+        table_local.getColumns().setAll(createColumns());
         TableColumn<D, Void> editCol = new TableColumn<>("Editar");
         editCol.setCellFactory(param -> new TableCell<>() {
         
@@ -46,7 +46,8 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
             }
         });
 
-        return table;
+        table_local.getColumns().add(editCol);
+        return table_local;
     }
 
     protected TableView<D> getTableView(){
