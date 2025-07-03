@@ -13,9 +13,9 @@ import javafx.scene.layout.Region;
 import javafx.util.Builder;
 
 public abstract  class IndexView<D extends Dto> implements Builder<Region> {
-    private final IndexModel model;
+    protected final IndexModel model;
     private final Button editButton;
-    private final TableView<D> table;
+    protected final TableView<D> table;
     public IndexView(IndexModel model){
         this.model = model;
         this.editButton = editButton();
@@ -55,7 +55,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         
     }
 
-    protected abstract  List<TableColumn<D, Object>> createColumns();
+    protected abstract  List<TableColumn<D, ?>> createColumns();
     protected abstract Button editButton();
     
     

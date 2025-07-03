@@ -17,9 +17,11 @@ public abstract  class IndexController <
     
     public IndexController(){
         this.model = initModel();
+        this.interactor = initInteractor();
         this.view = initView();
        
-        this.interactor = initInteractor();
+      
+       
     }
 
     public Region getView(){
@@ -29,4 +31,7 @@ public abstract  class IndexController <
     protected abstract V initView();
     protected abstract M initModel();
     protected abstract I initInteractor();
+
+
+    
 }
