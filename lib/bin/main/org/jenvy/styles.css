@@ -1,0 +1,9 @@
+.table-view{
+    -fx-background-color: #ff0000;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 10;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
