@@ -1,12 +1,12 @@
 package org.jenvy.controller;
 
-import org.jenvy.model.Model;
+import org.jenvy.model.DashboardModel;
 import org.jenvy.view.View;
 
 public abstract  class Controller {
     
     private final View view;
-    private final Model model;
+    private final DashboardModel model;
 
     //Controllers
     private final IndexController indexController;
@@ -33,6 +33,6 @@ public abstract  class Controller {
 
 
     protected abstract View view();
-    protected abstract Model model();
+    protected abstract DashboardModel model();
 
 }

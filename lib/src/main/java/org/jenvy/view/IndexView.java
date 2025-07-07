@@ -1,16 +1,13 @@
 package org.jenvy.view;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 import org.jenvy.dto.Dto;
+import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
 
-import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Region;
@@ -22,17 +19,17 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     protected final IndexModel<D> model;
     private final Button editButton;
     protected final TableView<D> table;
-    protected  final VBox container;
+    protected   VBox container;
 
-    protected final  HashMap<String, Function<Object,Object>> actions;
+    protected final  IndexInteractor interactor;
 
-    public IndexView(IndexModel<D> model , HashMap<String, Function<Object,Object>> actions){
+    public IndexView(IndexModel<D> model ,  IndexInteractor interactor){
         this.model = model;
-        this.actions  =actions;
+        this.interactor  =interactor;
         this.editButton = editButton();
         this.table= createTable();
         this.container = createContainer();
-        addPagination();
+        paginate();
     }
 
     @Override
@@ -53,27 +50,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         return table_local;
     }
 
-    private Region createPage(int pageIndex) {
-        int fromIndex = pageIndex * model.pagination().get();
-        int toIndex = Math.min(fromIndex + model.pagination().get(), model.items().size());
 
-        table.setItems(FXCollections.observableArrayList(model.items().subList(fromIndex, toIndex)));
-
-        if (table.getColumns().isEmpty()) {
-            table.getColumns().setAll(createColumns());
-            TableColumn<D, Void> editCol = new TableColumn<>("Editar");
-            editCol.setCellFactory(param -> new TableCell<>() {
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setGraphic(empty ? null : editButton);
-                }
-            });
-            table.getColumns().add(editCol);
-        }
-
-        return new VBox(table); // puede ser VBox para incluir más cosas
-    }
     private void updatePagination() {
         int pageCount = (int) Math.ceil((double) model.items().size() / model.pagination().get());
         pagination.setPageCount(Math.max(pageCount, 1));
@@ -83,12 +60,12 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
 
         
     }
-    private void addPagination(){
+    private void paginate(){
         pagination.setPageFactory(pageIndex ->{
-                actions.get("createPage").apply(pageIndex);
+                model.index().set(pageIndex);
                return  createTable();
         });
-        container.getChildren().add(pagination);
+       container.getChildren().add(pagination);
     }
 
     protected abstract VBox createContainer();
