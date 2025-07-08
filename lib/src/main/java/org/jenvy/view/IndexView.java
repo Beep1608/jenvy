@@ -1,35 +1,48 @@
 package org.jenvy.view;
 
+
 import java.util.List;
 
 import org.jenvy.dto.Dto;
 import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
 
+import javafx.beans.property.StringProperty;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
 
 public abstract  class IndexView<D extends Dto> implements Builder<Region> {
-    protected final Pagination pagination = new Pagination(10);
+    protected final Pagination pagination = new Pagination();
     protected final IndexModel<D> model;
     private final Button editButton;
+    private final Button createButton;
     protected final TableView<D> table;
     protected   VBox container;
+    protected HBox buttonsContainer;
+    protected TextField searchField;
 
     protected final  IndexInteractor interactor;
 
     public IndexView(IndexModel<D> model ,  IndexInteractor interactor){
         this.model = model;
         this.interactor  =interactor;
+        this.searchField = createSearchField();
+        this.createButton = createButton();
         this.editButton = editButton();
         this.table= createTable();
-        this.container = createContainer();
+        this.buttonsContainer = createButtonsContainer();
+        this.container = createMainContainer();
         paginate();
+        addToContainers();
     }
 
     @Override
@@ -44,32 +57,62 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table_local.getStyleClass().add("table-view");
-     
-        // pagination.setPageFactory(this::createPage);
-        // updatePagination(); // <- inicializa el número de páginas
         return table_local;
     }
 
-
-    private void updatePagination() {
-        int pageCount = (int) Math.ceil((double) model.items().size() / model.pagination().get());
-        pagination.setPageCount(Math.max(pageCount, 1));
+    public Pagination getPagination(){
+        return  pagination;
     }
-    protected TableView<D> getTableView(){
-        return table;
 
-        
+    protected  TableView<D> getTableView(){
+        return table;
+    }
+
+    public StringProperty searchProperty(){
+        return searchField.textProperty();
     }
     private void paginate(){
         pagination.setPageFactory(pageIndex ->{
                 model.index().set(pageIndex);
                return  createTable();
         });
-       container.getChildren().add(pagination);
     }
 
-    protected abstract VBox createContainer();
+    private void addToContainers(){
+        buttonsContainer.getChildren()
+        .addAll(
+            searchField,
+            createButton,
+            editButton
+        );
+        container.getChildren()
+        .addAll(
+            buttonsContainer,
+            pagination
+        );
+    }
+
+    protected VBox createMainContainer(){
+        container = new VBox();
+        container.setPadding(new Insets(10,10,10,10));
+        return  container;
+    }
+
+    protected TextField createSearchField(){
+        TextField field = new TextField();
+        
+        return field;
+    }
+
+    protected  HBox createButtonsContainer(){
+        buttonsContainer = new HBox();
+        buttonsContainer.setAlignment(Pos.CENTER_RIGHT);
+        buttonsContainer.setSpacing(5);
+        return buttonsContainer;
+    }
+
     protected abstract  List<TableColumn<D, ?>> createColumns();
+    protected abstract Button createButton();
     protected abstract Button editButton();
     
     
