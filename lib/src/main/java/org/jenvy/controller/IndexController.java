@@ -1,15 +1,16 @@
 package org.jenvy.controller;
 
-import org.jenvy.interactor.Interactor;
+import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
 import org.jenvy.view.IndexView;
 
+import javafx.collections.ListChangeListener;
 import javafx.scene.layout.Region;
 
 public abstract  class IndexController <
     M extends IndexModel,    
     V extends IndexView, 
-    I extends Interactor
+    I extends IndexInteractor
 > {
     protected  final V view;
     protected final M model;
@@ -21,7 +22,7 @@ public abstract  class IndexController <
         this.interactor = initInteractor();
         this.view = initView();
        
-      
+        listeners();
        
     }
 
@@ -34,8 +35,31 @@ public abstract  class IndexController <
     protected abstract I initInteractor();
 
 
-    private void makeBindings(){
+    private void listeners(){
+
+        model.items().addListener((ListChangeListener)change->{
+            while (change.next()) {
+                interactor.updatePagination();
+            }
+        });
+
+        model.pageCount().addListener((obs, oldVal, newVal) -> {
+            view.getPagination().setPageCount(newVal.intValue());
+        });
+
+        model.index().addListener((observable, oldValue, newValue) -> {
+            interactor.createPage(newValue.intValue());
+        });
+
+        view.searchProperty().addListener((observable, oldValue, newValue) -> {
+            model.search().set(newValue);
+        });
         
+        model.search().addListener((obs, oldVal, newVal)->{
+            System.out.println("Nuevo valor: "+ newVal);
+            interactor.search(newVal);
+        });
+
     }
     protected abstract void bindings();
 
