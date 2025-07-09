@@ -43,21 +43,28 @@ public abstract  class IndexController <
             }
         });
 
-        model.pageCount().addListener((obs, oldVal, newVal) -> {
-            view.getPagination().setPageCount(newVal.intValue());
+        model.pageCount().addListener((obs, oldVal, newValue) -> {
+            view.getPagination().setPageCount(newValue.intValue());
         });
 
         model.index().addListener((observable, oldValue, newValue) -> {
-            interactor.createPage(newValue.intValue());
+            
+            System.out.println("Cambio index :"+ newValue);
+            if(model.search().get().equals("")){
+                interactor.updatePagination();
+                if (view.getPagination().getCurrentPageIndex() != newValue.intValue()) {
+                    view.getPagination().setCurrentPageIndex(newValue.intValue());
+                }
+            }
         });
 
         view.searchProperty().addListener((observable, oldValue, newValue) -> {
             model.search().set(newValue);
         });
         
-        model.search().addListener((obs, oldVal, newVal)->{
-            System.out.println("Nuevo valor: "+ newVal);
-            interactor.search(newVal);
+        model.search().addListener((obs, oldVal, newValue)->{
+            System.out.println("Nuevo valor: "+ newValue);
+            interactor.search(newValue);
         });
 
     }

@@ -49,6 +49,13 @@ public class IndexInteractor<D extends Dto>  extends Interactor<IndexModel<D>> {
         }
     }
 
+    public void updateFilteredPagination(){
+        int pageCount = (int) Math.ceil((double) model.searchedItems().size() / model.pagination().get());
+        model.pageCount().set(Math.max(pageCount, 1));
+        model.index().set(0);
+        createFilteredPage(model.index().get());
+    }
+
     public void updatePagination() {
         int pageCount = (int) Math.ceil((double) model.items().size() / model.pagination().get());
         model.pageCount().set(Math.max(pageCount, 1));
@@ -56,13 +63,22 @@ public class IndexInteractor<D extends Dto>  extends Interactor<IndexModel<D>> {
     }
 
     public void search(String text){
-
+  
         if(!text.equals("")){
             model.searchedItems().setPredicate(item -> item.searcheable().toLowerCase().contains(text));
-            createFilteredPage(0);
+            updateFilteredPagination();
+            return;
+        }
+        if(text.equals("") && model.index().get()!= 0){
+            model.index().set(0);
         }else{
-            //model.index().set(0);
-            //createPage(model.index().get());
+            updatePagination();
+        }
+    }
+
+    private void printSearchedItems(){
+        for (var item : model.searchedItems()) {
+                System.out.println("Item "+ item.searcheable());
         }
     }
 }

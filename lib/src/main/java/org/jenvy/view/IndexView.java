@@ -16,10 +16,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Builder;
-
+//TODO: Mejorar estilo de barra de busqueda y de tabla, botones crear y editar y pagiando
 public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     protected final Pagination pagination = new Pagination();
     protected final IndexModel<D> model;
@@ -28,6 +29,8 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     protected final TableView<D> table;
     protected   VBox container;
     protected HBox buttonsContainer;
+    protected HBox searchFieldContainer;
+    protected HBox topContainer;
     protected TextField searchField;
 
     protected final  IndexInteractor interactor;
@@ -36,8 +39,10 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         this.model = model;
         this.interactor  =interactor;
         this.searchField = createSearchField();
+        this.searchFieldContainer = createSearchFieldContainer();
         this.createButton = createButton();
         this.editButton = editButton();
+        this.topContainer = createTopContainer();
         this.table= createTable();
         this.buttonsContainer = createButtonsContainer();
         this.container = createMainContainer();
@@ -73,21 +78,30 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     }
     private void paginate(){
         pagination.setPageFactory(pageIndex ->{
-                model.index().set(pageIndex);
-               return  createTable();
+            model.index().set(pageIndex);
+            return  createTable();
         });
     }
 
     private void addToContainers(){
         buttonsContainer.getChildren()
         .addAll(
-            searchField,
             createButton,
             editButton
         );
+        searchFieldContainer.getChildren()
+        .addAll(
+            searchField
+        );
+
+        topContainer.getChildren()
+        .addAll(
+            searchFieldContainer,
+            buttonsContainer
+        );
         container.getChildren()
         .addAll(
-            buttonsContainer,
+            topContainer,
             pagination
         );
     }
@@ -109,6 +123,19 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         buttonsContainer.setAlignment(Pos.CENTER_RIGHT);
         buttonsContainer.setSpacing(5);
         return buttonsContainer;
+    }
+
+    protected HBox createSearchFieldContainer(){
+        HBox container = new HBox();
+        container.setAlignment(Pos.CENTER_LEFT);
+        container.setHgrow(container, Priority.ALWAYS);
+        return container;
+    }
+
+    protected  HBox createTopContainer(){
+        HBox container = new HBox();
+        container.setAlignment(Pos.CENTER);
+        return  container;
     }
 
     protected abstract  List<TableColumn<D, ?>> createColumns();
