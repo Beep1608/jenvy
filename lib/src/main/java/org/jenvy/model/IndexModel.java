@@ -14,8 +14,8 @@ import javafx.collections.transformation.FilteredList;
 public abstract class IndexModel<D extends Dto> extends Model {
     private final SimpleListProperty<D> items  = new SimpleListProperty<>();
     private final SimpleListProperty<D> tempItems = new SimpleListProperty<>();
-    private final SimpleStringProperty search = new SimpleStringProperty();
-    private final FilteredList<D> searchedItems = new FilteredList<>(tempItems);
+    private final SimpleStringProperty search = new SimpleStringProperty("");
+    private final FilteredList<D> searchedItems = new FilteredList<>(items);
     private final SimpleIntegerProperty pagination = new SimpleIntegerProperty(10);
     private final SimpleIntegerProperty pageCount = new SimpleIntegerProperty(1);
     private final SimpleIntegerProperty index  = new SimpleIntegerProperty(0);
