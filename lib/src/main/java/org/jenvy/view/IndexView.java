@@ -46,6 +46,10 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         this.table= createTable();
         this.buttonsContainer = createButtonsContainer();
         this.container = createMainContainer();
+        container.getStylesheets().add(
+            IndexView.class.getResource("/org/jenvy/styles.css").toExternalForm()
+        );
+
         paginate();
         addToContainers();
     }
@@ -109,12 +113,14 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     protected VBox createMainContainer(){
         container = new VBox();
         container.setPadding(new Insets(10,10,10,10));
+        container.setSpacing(10);
+        container.setAlignment(Pos.CENTER);
         return  container;
     }
 
     protected TextField createSearchField(){
         TextField field = new TextField();
-        
+        field.getStyleClass().add("search-field");
         return field;
     }
 
@@ -129,6 +135,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
         HBox container = new HBox();
         container.setAlignment(Pos.CENTER_LEFT);
         container.setHgrow(container, Priority.ALWAYS);
+        container.getStyleClass().add("search-container");
         return container;
     }
 

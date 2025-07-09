@@ -23,7 +23,7 @@ public abstract  class IndexController <
         this.view = initView();
        
         listeners();
-       
+       System.out.println("COntrolador index");
     }
 
     public Region getView(){
