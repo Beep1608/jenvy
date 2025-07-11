@@ -1,14 +1,14 @@
 package org.jenvy.view;
 
-import javafx.scene.layout.Region;
-import javafx.util.Builder;
+import org.jenvy.components.FormView;
+import org.jenvy.interactor.CreateInteractor;
+import org.jenvy.model.CreateModel;
 
-public abstract  class CreateView implements Builder<Region> {
+public abstract  class CreateView extends FormView {
 
-    @Override
-    public Region build() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method in CreateView");
-    }
-    
+   public CreateView (CreateModel model, CreateInteractor interactor){
+    super(model, interactor);
+
+   }
+
 }

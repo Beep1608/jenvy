@@ -19,25 +19,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Builder;
 //TODO: Mejorar estilo de barra de busqueda y de tabla, botones crear y editar y pagiando
-public abstract  class IndexView<D extends Dto> implements Builder<Region> {
+public abstract  class IndexView<D extends Dto> extends View {
     protected final Pagination pagination = new Pagination();
-    protected final IndexModel<D> model;
     private final Button editButton;
     private final Button createButton;
     protected final TableView<D> table;
-    protected   VBox container;
+    protected final VBox container;
     protected HBox buttonsContainer;
     protected HBox searchFieldContainer;
     protected HBox topContainer;
     protected TextField searchField;
 
-    protected final  IndexInteractor interactor;
-
     public IndexView(IndexModel<D> model ,  IndexInteractor interactor){
-        this.model = model;
-        this.interactor  =interactor;
+        super(model, interactor);
         this.searchField = createSearchField();
         this.searchFieldContainer = createSearchFieldContainer();
         this.createButton = createButton();
@@ -62,7 +57,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     protected TableView<D> createTable(){
         
        TableView<D> table_local = new TableView<>();
-        table_local.setItems(model.tempItems());
+        table_local.setItems(((IndexModel<D>)model).tempItems());
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table_local.getStyleClass().add("table-view");
@@ -82,7 +77,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     }
     private void paginate(){
         pagination.setPageFactory(pageIndex ->{
-            model.index().set(pageIndex);
+           ((IndexModel<D>)model).index().set(pageIndex);
             return  createTable();
         });
     }
@@ -111,7 +106,7 @@ public abstract  class IndexView<D extends Dto> implements Builder<Region> {
     }
 
     protected VBox createMainContainer(){
-        container = new VBox();
+        VBox container = new VBox();
         container.setPadding(new Insets(10,10,10,10));
         container.setSpacing(10);
         container.setAlignment(Pos.CENTER);

@@ -1,10 +1,16 @@
 package org.jenvy.view;
 
-import javafx.scene.layout.Region;
-import javafx.util.Builder;
+import org.jenvy.interactor.EditInteractor;
+import org.jenvy.model.EditModel;
 
-public abstract class EditView implements Builder<Region>{
+import javafx.scene.layout.Region;
+
+public abstract class EditView extends View{
     
+    public EditView(EditModel model, EditInteractor interactor){
+        super(model, interactor);
+
+    }
     @Override
     public Region build() {
         throw new UnsupportedOperationException("Unimplemented method in EditView");
