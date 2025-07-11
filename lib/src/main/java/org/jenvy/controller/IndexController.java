@@ -2,6 +2,7 @@ package org.jenvy.controller;
 
 import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
+import org.jenvy.model.Model;
 import org.jenvy.view.IndexView;
 
 import javafx.collections.ListChangeListener;
@@ -11,7 +12,7 @@ public abstract  class IndexController <
     M extends IndexModel,    
     V extends IndexView, 
     I extends IndexInteractor
-> {
+>  extends Controller{
     protected  final V view;
     protected final M model;
     protected final I interactor;
@@ -34,8 +35,8 @@ public abstract  class IndexController <
     protected abstract M initModel();
     protected abstract I initInteractor();
 
-
-    private void listeners(){
+    @Override
+    protected  void listeners(){
 
         model.items().addListener((ListChangeListener)change->{
             while (change.next()) {
@@ -68,7 +69,15 @@ public abstract  class IndexController <
         });
 
     }
-    protected abstract void bindings();
+    @Override
+    protected void bindings(){
+        view.build().visibleProperty().bind(model.visible());
+    }
+
+    @Override
+    public Model getModel() {
+        return model;
+    }
 
 
 

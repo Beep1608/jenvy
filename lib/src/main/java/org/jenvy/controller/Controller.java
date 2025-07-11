@@ -1,38 +1,13 @@
 package org.jenvy.controller;
 
-import org.jenvy.model.DashboardModel;
-import org.jenvy.view.View;
+import org.jenvy.model.Model;
 
 public abstract  class Controller {
     
-    private final View view;
-    private final DashboardModel model;
 
-    //Controllers
-    private final IndexController indexController;
-    private final CreateController createController;
-    private final EditController editController;
-    private final ShowController showController;
+    protected abstract void listeners();
 
-    public  Controller (){
+    protected abstract void bindings();
 
-        this.indexController = indexController();
-        this.createController = createController();
-        this.editController = editController();
-        this.showController = showController();
-        
-        this.model = model();
-        this.view = this.view();
-    }
-
-    
-    protected abstract IndexController indexController();
-    protected abstract CreateController createController();
-    protected abstract EditController editController();
-    protected abstract ShowController showController();
-
-
-    protected abstract View view();
-    protected abstract DashboardModel model();
-
+    public abstract Model getModel();
 }

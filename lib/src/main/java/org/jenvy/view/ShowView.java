@@ -1,10 +1,17 @@
 package org.jenvy.view;
 
-import javafx.scene.layout.Region;
-import javafx.util.Builder;
+import org.jenvy.interactor.ShowInteractor;
+import org.jenvy.model.ShowModel;
 
-public abstract class ShowView implements Builder<Region>{
+import javafx.scene.layout.Region;
+
+public abstract class ShowView extends View{
         
+
+    public ShowView(ShowModel model, ShowInteractor interactor){
+        super(model, interactor);
+    }
+
     @Override
     public Region build() {
         // TODO Auto-generated method stub
