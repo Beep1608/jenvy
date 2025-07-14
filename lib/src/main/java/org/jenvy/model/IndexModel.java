@@ -49,4 +49,6 @@ public abstract class IndexModel<D extends Dto> extends Model {
     public StringProperty search(){
         return search;
     }
+    
+
 }

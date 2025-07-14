@@ -1,13 +1,16 @@
 package org.jenvy.controller;
 
+import org.jenvy.interactor.DashboardInteractor;
 import org.jenvy.model.DashboardModel;
-import org.jenvy.model.Model;
 import org.jenvy.view.DashboardView;
 
-public abstract  class DashboardController extends Controller {
+import javafx.scene.layout.Region;
+
+public abstract  class DashboardController extends Controller<DashboardModel, DashboardInteractor, DashboardView> {
     
-    private final DashboardView view;
-    private final DashboardModel model;
+    protected  final DashboardView view;
+    protected final DashboardModel model;
+    protected final DashboardInteractor interactor;
 
     //Controllers
     protected  final IndexController indexController;
@@ -22,8 +25,9 @@ public abstract  class DashboardController extends Controller {
         this.editController = editController();
         this.showController = showController();
         
-        this.model = model();
-        this.view = this.view();
+        this.model = initModel();
+        this.interactor = initInteractor();
+        this.view = initView();
 
         listeners();
         bindings();
@@ -35,9 +39,6 @@ public abstract  class DashboardController extends Controller {
     protected abstract EditController editController();
     protected abstract ShowController showController();
 
-
-    protected abstract DashboardView view();
-    protected abstract DashboardModel model();
 
     @Override
     protected void listeners(){
@@ -86,8 +87,17 @@ public abstract  class DashboardController extends Controller {
     }
 
     @Override
-    public Model getModel() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public DashboardModel getModel() {
+        return  model;
+    }
+    @Override
+    public DashboardInteractor getInteractor() {
+        return  interactor;
+    }
+
+    @Override
+    public Region getView() {
+        return  view.build();
     }
 
 }

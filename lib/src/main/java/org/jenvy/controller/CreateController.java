@@ -1,35 +1,48 @@
 package org.jenvy.controller;
 
+import org.jenvy.interactor.CreateInteractor;
 import org.jenvy.model.CreateModel;
-import org.jenvy.model.Model;
 import org.jenvy.view.CreateView;
 
-public abstract  class CreateController extends Controller {
+import javafx.scene.layout.Region;
+
+public abstract  class CreateController extends Controller<CreateModel, CreateInteractor, CreateView> {
     
-    private final CreateView view;
-    private final CreateModel model;
+    protected  final CreateView view;
+    protected  final CreateModel model;
+    protected  final CreateInteractor interactor;
     
     public CreateController(){
         this.model = initModel();
+        this.interactor = initInteractor();
         this.view = initView();
 
     }
 
-    public CreateView getView(){
-        return view;
+    public Region getView(){
+        return view.build();
     }
 
 
+    @Override
     protected abstract CreateView initView();
+    @Override
     protected abstract CreateModel initModel();
+    @Override
+    protected abstract CreateInteractor initInteractor();
 
     @Override
     protected void listeners() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Listeners not supported yet.");
     }
 
     @Override
-    public Model getModel() {
+    public CreateModel getModel() {
         return model;
+    }
+
+    @Override
+    public CreateInteractor getInteractor(){
+        return  interactor;
     }
 }

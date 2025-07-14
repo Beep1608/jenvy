@@ -53,4 +53,8 @@ public abstract  class DashboardView extends View {
         return container;
     }
     
+    @Override
+    protected DashboardModel getModel(){
+        return (DashboardModel)model;
+    }
 }

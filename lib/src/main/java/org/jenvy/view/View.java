@@ -19,5 +19,7 @@ public abstract  class View implements Builder<Region> {
     public Region build() {
         throw new UnsupportedOperationException("View build() not supported yet.");
     }
+
+    protected abstract Model getModel();
     
 }
