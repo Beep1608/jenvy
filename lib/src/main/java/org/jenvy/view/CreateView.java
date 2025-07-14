@@ -11,4 +11,9 @@ public abstract  class CreateView extends FormView {
 
    }
 
+   @Override
+   protected CreateModel getModel(){
+      return (CreateModel)model;
+   }
+
 }

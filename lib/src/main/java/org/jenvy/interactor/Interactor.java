@@ -1,12 +1,14 @@
 package org.jenvy.interactor;
 
 import org.jenvy.model.Model;
- public abstract class   Interactor<M extends Model> {
-    protected final  M model;
+ public abstract class   Interactor {
+    protected final  Model model;
 
-    public Interactor (M model){
+    public Interactor (Model model){
         this.model = model;
     }
+
+    protected  abstract  Model getModel();
 
 
 }

@@ -1,21 +1,27 @@
 package org.jenvy.controller;
 
+import org.jenvy.interactor.ShowInteractor;
 import org.jenvy.model.Model;
 import org.jenvy.model.ShowModel;
 import org.jenvy.view.ShowView;
 
 public abstract class ShowController extends Controller {
     
-    private final ShowView view;
-    private final ShowModel model;
+    protected  final ShowModel model;
+    protected final  ShowInteractor interactor;
+    protected  final ShowView view;
     
     public ShowController(){
-        this.view = initView();
+        
         this.model = initModel();
+        this.interactor = initInteractor();
+        this.view = initView();
     }
 
-    protected abstract ShowView initView();
     protected abstract ShowModel initModel();
+    protected abstract ShowInteractor initInteractor();
+    protected abstract ShowView initView();
+
 
     @Override
     protected void listeners() {

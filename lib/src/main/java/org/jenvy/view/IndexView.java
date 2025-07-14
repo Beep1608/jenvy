@@ -8,6 +8,7 @@ import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
 
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,18 +21,18 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 //TODO: Mejorar estilo de barra de busqueda y de tabla, botones crear y editar y pagiando
-public abstract  class IndexView<D extends Dto> extends View {
+public abstract  class IndexView extends View {
     protected final Pagination pagination = new Pagination();
     private final Button editButton;
     private final Button createButton;
-    protected final TableView<D> table;
+    protected final TableView<Dto> table;
     protected final VBox container;
     protected HBox buttonsContainer;
     protected HBox searchFieldContainer;
     protected HBox topContainer;
     protected TextField searchField;
 
-    public IndexView(IndexModel<D> model ,  IndexInteractor interactor){
+    public IndexView(IndexModel model ,  IndexInteractor interactor){
         super(model, interactor);
         this.searchField = createSearchField();
         this.searchFieldContainer = createSearchFieldContainer();
@@ -54,10 +55,13 @@ public abstract  class IndexView<D extends Dto> extends View {
         return container;
     }
 
-    protected TableView<D> createTable(){
+    protected <D extends Dto>  TableView<D> createTable(){
         
        TableView<D> table_local = new TableView<>();
-        table_local.setItems(((IndexModel<D>)model).tempItems());
+        table_local.setItems( 
+            FXCollections.observableArrayList( 
+            ((IndexModel)model).tempItems())
+        );
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table_local.getStyleClass().add("table-view");
@@ -68,7 +72,7 @@ public abstract  class IndexView<D extends Dto> extends View {
         return  pagination;
     }
 
-    protected  TableView<D> getTableView(){
+    protected  TableView<Dto> getTableView(){
         return table;
     }
 
@@ -77,7 +81,7 @@ public abstract  class IndexView<D extends Dto> extends View {
     }
     private void paginate(){
         pagination.setPageFactory(pageIndex ->{
-           ((IndexModel<D>)model).index().set(pageIndex);
+           ((IndexModel)model).index().set(pageIndex);
             return  createTable();
         });
     }
@@ -140,11 +144,14 @@ public abstract  class IndexView<D extends Dto> extends View {
         return  container;
     }
 
-    protected abstract  List<TableColumn<D, ?>> createColumns();
+    protected abstract <D extends Dto>  List<TableColumn<D, ?>> createColumns();
     protected abstract Button createButton();
     protected abstract Button editButton();
     
-    
+    @Override
+    protected IndexModel getModel(){
+        return (IndexModel)model;
+    }
     
     
 }

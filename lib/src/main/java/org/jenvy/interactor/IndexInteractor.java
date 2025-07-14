@@ -5,22 +5,22 @@ import org.jenvy.model.IndexModel;
 
 import javafx.collections.FXCollections;
 
-public class IndexInteractor<D extends Dto>  extends Interactor<IndexModel<D>> {
+public class IndexInteractor extends Interactor{
     
 
 
-    public IndexInteractor(IndexModel<D> model){
+    public IndexInteractor(IndexModel model){
         super(model);
     }
 
    public void createPage(Integer index){
         try {
             
-            int fromIndex = (int)index * model.pagination().get();
-            int toIndex = Math.min(fromIndex + model.pagination().get(), model.items().size());
-            model.tempItems().set(
-                FXCollections.observableArrayList(
-                    model.items().subList(fromIndex, toIndex)
+            int fromIndex = (int)index * getModel().pagination().get();
+            int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().items().size());
+            getModel().tempItems().set(
+               FXCollections.observableArrayList(
+                    getModel().items().subList(fromIndex, toIndex)
                 )
             );
 
@@ -34,11 +34,11 @@ public class IndexInteractor<D extends Dto>  extends Interactor<IndexModel<D>> {
     public void createFilteredPage(Integer index){
         try {
             
-            int fromIndex = (int)index * model.pagination().get();
-            int toIndex = Math.min(fromIndex + model.pagination().get(), model.searchedItems().size());
-            model.tempItems().set(
+            int fromIndex = (int)index * getModel().pagination().get();
+            int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().searchedItems().size());
+            getModel().tempItems().set(
                 FXCollections.observableArrayList(
-                    model.searchedItems().subList(fromIndex, toIndex)
+                    getModel().searchedItems().subList(fromIndex, toIndex)
                 )
             );
 
@@ -50,35 +50,42 @@ public class IndexInteractor<D extends Dto>  extends Interactor<IndexModel<D>> {
     }
 
     public void updateFilteredPagination(){
-        int pageCount = (int) Math.ceil((double) model.searchedItems().size() / model.pagination().get());
-        model.pageCount().set(Math.max(pageCount, 1));
-        model.index().set(0);
-        createFilteredPage(model.index().get());
+        int pageCount = (int) Math.ceil((double) getModel().searchedItems().size() / getModel().pagination().get());
+        getModel().pageCount().set(Math.max(pageCount, 1));
+        getModel().index().set(0);
+        createFilteredPage(getModel().index().get());
     }
 
     public void updatePagination() {
-        int pageCount = (int) Math.ceil((double) model.items().size() / model.pagination().get());
-        model.pageCount().set(Math.max(pageCount, 1));
-        createPage(model.index().get());
+        int pageCount = (int) Math.ceil((double) getModel().items().size() / getModel().pagination().get());
+        getModel().pageCount().set(Math.max(pageCount, 1));
+        createPage(getModel().index().get());
     }
 
     public void search(String text){
   
         if(!text.equals("")){
-            model.searchedItems().setPredicate(item -> item.searcheable().toLowerCase().contains(text));
+            getModel().searchedItems().setPredicate(item -> ((Dto)item).searcheable().toLowerCase().contains(text));
             updateFilteredPagination();
             return;
         }
-        if(text.equals("") && model.index().get()!= 0){
-            model.index().set(0);
+        if(text.equals("") && getModel().index().get()!= 0){
+            getModel().index().set(0);
         }else{
             updatePagination();
         }
     }
 
     private void printSearchedItems(){
-        for (var item : model.searchedItems()) {
-                System.out.println("Item "+ item.searcheable());
+        for (var item : getModel().searchedItems()) {
+                System.out.println("Item "+ ((Dto)item).searcheable());
         }
     }
+
+    @Override
+    public IndexModel getModel() {
+        return (IndexModel)model;
+    }
+
+    
 }
