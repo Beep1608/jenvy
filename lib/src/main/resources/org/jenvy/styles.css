@@ -94,3 +94,7 @@
 .dashboard{
 
 }
+
+.main-container{
+    -fx-background-color: rgb(214, 0, 0);
+}

@@ -114,6 +114,7 @@ public abstract  class IndexView extends View {
         container.setPadding(new Insets(10,10,10,10));
         container.setSpacing(10);
         container.setAlignment(Pos.CENTER);
+        container.getStyleClass().add("main-container");
         return  container;
     }
 

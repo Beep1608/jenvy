@@ -21,7 +21,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
         this.view = initView();
        
         listeners();
-       System.out.println("COntrolador index");
+       System.out.println("Controlador index");
     }
 
     public Region getView(){
