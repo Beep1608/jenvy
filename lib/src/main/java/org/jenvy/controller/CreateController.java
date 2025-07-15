@@ -17,8 +17,12 @@ public abstract  class CreateController extends Controller<CreateModel, CreateIn
         this.interactor = initInteractor();
         this.view = initView();
 
+        listeners();
+        bindings();
+
     }
 
+    @Override
     public Region getView(){
         return view.build();
     }
@@ -33,7 +37,16 @@ public abstract  class CreateController extends Controller<CreateModel, CreateIn
 
     @Override
     protected void listeners() {
-        throw new UnsupportedOperationException("Listeners not supported yet.");
+             
+          model.visible().addListener((obs, oldVal, newValue) ->{
+            System.out.println("Modelo create nuevo valor : "+ newValue);
+        });
+    }
+     @Override
+    protected void bindings(){
+      System.out.println("BINDINGS EN CREATE");
+        view.build().visibleProperty().bind(model.visible());
+        System.out.println("CREATE : "+ view.build().visibleProperty());
     }
 
     @Override

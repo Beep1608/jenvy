@@ -94,3 +94,7 @@
 .dashboard{
 
 }
+
+.buy-scroll{
+    -fx-background-color: rgb(214, 0, 0);
+}

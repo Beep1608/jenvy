@@ -1,38 +1,43 @@
 package org.jenvy.components;
+
 import org.jenvy.interactor.Interactor;
 import org.jenvy.model.Model;
-import org.jenvy.utils.Responsive;
 import org.jenvy.view.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 public abstract class FormView extends View {
 
-    private VBox mainContainer  =new VBox();
-    private ScrollPane scrollPane = new ScrollPane(); 
+    private final VBox mainContainer  =new VBox();
+    private final ScrollPane scrollPane = new ScrollPane(); 
     protected FormContainer generalDataCotainer;
     protected FormContainer specialDataContainer;
 
     public FormView(Model model ,Interactor interactor){
         super(model, interactor);
+        init();
     }
    
     //Create 
     private Button createButton;
     @Override
     public Region build() {
+        return scrollPane;
+    }
 
-       
-        scrollPane.setContent(mainContainer);
+    private void init(){
+        Label label  = new Label("asdddddddddddddddddddddddddddddddd");
+        //mainContainer.getChildren().add(label);
+
+        scrollPane.setContent(label);
         scrollPane.setFitToWidth(true);
         scrollPane.getStyleClass().add("buy-scroll");
-        Responsive.bindingToParentHeight(mainContainer, 1);
-
-        return scrollPane;
+       // Responsive.bindingToParentHeight(mainContainer, 1);
     }
 
 
