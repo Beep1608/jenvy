@@ -1,11 +1,10 @@
 package org.jenvy.controller;
 
 import org.jenvy.interactor.ShowInteractor;
-import org.jenvy.model.Model;
 import org.jenvy.model.ShowModel;
 import org.jenvy.view.ShowView;
 
-public abstract class ShowController extends Controller {
+public abstract class ShowController extends Controller<ShowModel, ShowInteractor, ShowView> {
     
     protected  final ShowModel model;
     protected final  ShowInteractor interactor;
@@ -16,6 +15,10 @@ public abstract class ShowController extends Controller {
         this.model = initModel();
         this.interactor = initInteractor();
         this.view = initView();
+
+        listeners();
+        this.bindings();
+        System.out.println("Show controller");
     }
 
     protected abstract ShowModel initModel();
@@ -25,11 +28,20 @@ public abstract class ShowController extends Controller {
 
     @Override
     protected void listeners() {
-        throw new UnsupportedOperationException("Not supported yet.");
+           model.visible().addListener((obs, oldVal, newValue) ->{
+            System.out.println("Modelo show nuevo valor : "+ newValue);
+        });
     }
 
     @Override
-    public Model getModel() {
+    protected void bindings(){
+        System.out.println("BINDINGS DE SHOW");
+        view.build().visibleProperty().bind(model.visible());
+        System.out.println("Visible show : "+ view.build().visibleProperty());
+    }
+
+    @Override
+    public ShowModel getModel() {
         return model;
     }
 }

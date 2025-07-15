@@ -21,7 +21,9 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
         this.view = initView();
        
         listeners();
+        bindings();
        System.out.println("Controlador index");
+       
     }
 
     public Region getView(){
@@ -38,6 +40,10 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
     @Override
     protected  void listeners(){
 
+        model.visible().addListener((obs, oldVal, newValue) ->{
+            System.out.println("Modelo index nuevo valor : "+ newValue);
+        });
+
         model.items().addListener((ListChangeListener)change->{
             while (change.next()) {
                 interactor.updatePagination();
@@ -48,7 +54,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
             view.getPagination().setPageCount(newValue.intValue());
         });
 
-        model.index().addListener((observable, oldValue, newValue) -> {
+        model.index().addListener((observable, oldValue, newValue) -> { 
             
             System.out.println("Cambio index :"+ newValue);
             if(model.search().get().equals("")){
@@ -71,6 +77,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
     }
     @Override
     protected void bindings(){
+      System.out.println("BINDINGS EN INDEX");
         view.build().visibleProperty().bind(model.visible());
     }
 

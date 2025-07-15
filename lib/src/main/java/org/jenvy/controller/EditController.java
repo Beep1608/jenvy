@@ -11,25 +11,36 @@ public abstract  class EditController extends Controller<EditModel, EditInteract
     protected  final EditView view;
     
     public EditController(){
-        this.view = initView();
         this.model = initModel();
         this.interactor = initInteractor();
+        this.view = initView();
+
+        listeners();
+        bindings();
     }
 
+    @Override
     protected abstract EditView initView();
+    @Override
     protected abstract EditModel initModel();
+    @Override
     protected abstract EditInteractor initInteractor();
 
     @Override
     protected void listeners() {
-        throw new UnsupportedOperationException("Listeners not supported yet.");
+          model.visible().addListener((obs, oldVal, newValue) ->{
+            System.out.println("Modelo edit nuevo valor : "+ newValue);
+        });
     }
 
     
     @Override
-    protected void bindings() {
-        throw new UnsupportedOperationException("Bindings not supported yet.");
+    protected void bindings(){
+        System.out.println("BINDINGS EN EDIT");
+        view.build().visibleProperty().bind(model.visible());
+        System.out.println("EDIT: "+ view.build().visibleProperty());
     }
+
 
     @Override
     public EditModel getModel() {

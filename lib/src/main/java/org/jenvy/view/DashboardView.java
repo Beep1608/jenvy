@@ -9,19 +9,19 @@ import javafx.scene.layout.StackPane;
 
 public abstract  class DashboardView extends View {
 
-    private  IndexView indexView;
-    private  CreateView createView;
-    private EditView editView;
-    private ShowView showView; 
+    protected   Region indexView;
+    protected   Region createView;
+    protected   Region editView;
+    protected   Region showView; 
 
     private final Pane container;
 
     public  DashboardView (DashboardModel model,
         DashboardInteractor interactor,
-        IndexView indexView,  
-        CreateView createView, 
-        EditView editView, 
-        ShowView showView
+        Region indexView,  
+        Region createView, 
+        Region editView, 
+        Region showView
     ) 
     {
         super(model, interactor);
@@ -30,11 +30,15 @@ public abstract  class DashboardView extends View {
         this.editView = editView;
         this.showView = showView;
 
+        System.out.println("Index :" + indexView );
+        System.out.println("Create :" + createView );
+        System.out.println("Edit :" + editView );
+        System.out.println("Show :" + showView );
         this.container = new StackPane(
-            indexView.build(),
-            createView.build(),
-            editView.build(),
-            showView.build()
+            indexView,
+            createView,
+            editView,
+            showView
         );
     }
     public DashboardView(DashboardModel model,
