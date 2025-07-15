@@ -29,8 +29,8 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
         this.interactor = initInteractor();
         this.view = initView();
 
-        listeners();
-        bindings();
+        //listeners();
+        //bindings();
     }
 
     
