@@ -5,7 +5,6 @@ import org.jenvy.model.IndexModel;
 import org.jenvy.view.IndexView;
 
 import javafx.collections.ListChangeListener;
-import javafx.scene.layout.Region;
 
 public abstract  class IndexController extends Controller<IndexModel, IndexInteractor, IndexView>{
 
@@ -26,8 +25,8 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
        
     }
 
-    public Region getView(){
-        return view.build();
+    public IndexView getView(){
+        return view;
     }
 
     @Override
@@ -79,6 +78,11 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
     protected void bindings(){
       System.out.println("BINDINGS EN INDEX");
         view.build().visibleProperty().bind(model.visible());
+    }
+
+    @Override
+    protected void actions(){
+
     }
 
     @Override

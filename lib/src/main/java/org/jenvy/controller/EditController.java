@@ -41,9 +41,23 @@ public abstract  class EditController extends Controller<EditModel, EditInteract
         System.out.println("EDIT: "+ view.build().visibleProperty());
     }
 
+    
+    @Override
+    protected void actions(){
+
+    }
+
 
     @Override
     public EditModel getModel() {
         return model;
     }
+
+    @Override
+    public EditView getView(){
+        return view;
+    }
+
+
+
 }

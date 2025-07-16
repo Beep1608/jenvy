@@ -4,8 +4,6 @@ import org.jenvy.interactor.DashboardInteractor;
 import org.jenvy.model.DashboardModel;
 import org.jenvy.view.DashboardView;
 
-import javafx.scene.layout.Region;
-
 public abstract  class DashboardController extends Controller<DashboardModel, DashboardInteractor, DashboardView> {
     
     protected  final DashboardView view;
@@ -31,6 +29,7 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
 
         listeners();
         bindings();
+        actions();
     }
 
     
@@ -43,6 +42,18 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
         return indexController;
     }
 
+    protected CreateController getCreateController(){
+        return createController;
+    }
+
+    protected EditController getEditController(){
+        return editController;
+    }
+
+    protected ShowController getShowController(){
+        return showController;
+    }
+    
     @Override
     protected void listeners(){
 
@@ -90,6 +101,18 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
     }
 
     @Override
+    protected void actions(){
+        indexController.getView().getCreateButton().setOnAction(value ->{
+            model.create().set(true);
+        });
+
+        indexController.getView().getEditButton().setOnAction(value->{
+            model.edit().set(true);
+        });
+
+    }
+
+    @Override
     public DashboardModel getModel() {
         return  model;
     }
@@ -99,8 +122,8 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
     }
 
     @Override
-    public Region getView() {
-        return  view.build();
+    public DashboardView getView() {
+        return  view;
     }
 
 }
