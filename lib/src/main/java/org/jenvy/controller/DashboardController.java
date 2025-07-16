@@ -39,6 +39,9 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
     protected abstract EditController editController();
     protected abstract ShowController showController();
 
+    protected IndexController getIndexController(){
+        return indexController;
+    }
 
     @Override
     protected void listeners(){
