@@ -98,3 +98,20 @@
 .buy-scroll{
     -fx-background-color: rgb(214, 0, 0);
 }
+
+.form-container{
+    -fx-background-color: #68000000;
+    -fx-border-color: #CCCCCC;
+    -fx-border-width: 3px;
+    -fx-border-radius: 4px;
+}
+.form-title{
+    -fx-text-fill: #8a8a8a;
+    -fx-font-size: 10px;
+    -fx-padding: 10 0 10 0;
+}
+
+.form-content{
+    /*-fx-padding: 20 20 15 10;
+*/
+}

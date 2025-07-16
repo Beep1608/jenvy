@@ -4,8 +4,6 @@ import org.jenvy.interactor.CreateInteractor;
 import org.jenvy.model.CreateModel;
 import org.jenvy.view.CreateView;
 
-import javafx.scene.layout.Region;
-
 public abstract  class CreateController extends Controller<CreateModel, CreateInteractor, CreateView> {
     
     protected  final CreateView view;
@@ -23,8 +21,8 @@ public abstract  class CreateController extends Controller<CreateModel, CreateIn
     }
 
     @Override
-    public Region getView(){
-        return view.build();
+    public CreateView getView(){
+        return view;
     }
 
 
@@ -49,6 +47,12 @@ public abstract  class CreateController extends Controller<CreateModel, CreateIn
         System.out.println("CREATE : "+ view.build().visibleProperty());
     }
 
+    
+    @Override
+    protected void actions(){
+
+    }
+    
     @Override
     public CreateModel getModel() {
         return model;

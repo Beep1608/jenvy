@@ -37,5 +37,13 @@ public class FormContainer extends VBox {
     public VBox getContentContainer() {
         return contentContainer;
     }
+
+    public HBox getTitleContainer(){
+        return titleContainer;
+    }
+
+    public VBox getFormContainer(){
+        return this;
+    }
     
 }

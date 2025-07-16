@@ -148,7 +148,15 @@ public abstract  class IndexView extends View {
     protected abstract <D extends Dto>  List<TableColumn<D, ?>> createColumns();
     protected abstract Button createButton();
     protected abstract Button editButton();
-    
+
+    public Button getCreateButton(){
+        return  createButton;
+    }
+
+    public Button getEditButton(){
+        return editButton;
+    }
+
     @Override
     protected IndexModel getModel(){
         return (IndexModel)model;

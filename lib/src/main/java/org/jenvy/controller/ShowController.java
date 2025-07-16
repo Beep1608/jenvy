@@ -40,8 +40,20 @@ public abstract class ShowController extends Controller<ShowModel, ShowInteracto
         System.out.println("Visible show : "+ view.build().visibleProperty());
     }
 
+    
+    @Override
+    protected void actions(){
+
+    }
+
     @Override
     public ShowModel getModel() {
         return model;
     }
+
+    @Override
+    public ShowView getView(){
+        return view;
+    }
+
 }

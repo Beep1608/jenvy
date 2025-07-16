@@ -2,12 +2,12 @@ package org.jenvy.components;
 
 import org.jenvy.interactor.Interactor;
 import org.jenvy.model.Model;
+import org.jenvy.utils.Responsive;
 import org.jenvy.view.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -21,6 +21,7 @@ public abstract class FormView extends View {
     public FormView(Model model ,Interactor interactor){
         super(model, interactor);
         init();
+        makeView();
     }
    
     //Create 
@@ -31,13 +32,11 @@ public abstract class FormView extends View {
     }
 
     private void init(){
-        Label label  = new Label("asdddddddddddddddddddddddddddddddd");
-        //mainContainer.getChildren().add(label);
 
-        scrollPane.setContent(label);
+        scrollPane.setContent(mainContainer);
         scrollPane.setFitToWidth(true);
         scrollPane.getStyleClass().add("buy-scroll");
-       // Responsive.bindingToParentHeight(mainContainer, 1);
+       Responsive.bindingToParentHeight(mainContainer, 1);
     }
 
 
@@ -55,7 +54,7 @@ public abstract class FormView extends View {
         addActionsToCreateButton();
     }
 
-    private void createGeneralDataContainer() {
+    protected  void createGeneralDataContainer() {
         generalDataCotainer = new FormContainer("Información General");
         
 
@@ -68,7 +67,7 @@ public abstract class FormView extends View {
     protected abstract void addFieldsToGeneralDataContainer();
     
 
-    private void createSpecialDataContainer() {
+    protected  void createSpecialDataContainer() {
         specialDataContainer = new FormContainer("Información Especial");
         specialDataContainer.setPrefHeight(300);
         specialDataContainer.getContentContainer().setSpacing(10);
