@@ -1,22 +1,20 @@
 package org.jenvy.components;
 
-
-
 import org.jenvy.utils.Responsive;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 
-public class FormInputText extends FormContainer{
+public abstract  class FormComboBox extends FormContainer{
 
-    private TextField input;
-    public FormInputText(String title) {
+    private ComboBox input;
+    public FormComboBox(String title) {
         super(title);
-       init();
+        init();
     }
-
+    
     private void init(){
-        input =new TextField();
-        
+        input =new ComboBox();
+        input.getItems().setAll(setItems());
         Responsive.bindingToParentWidth(input, 1);
         getTitleContainer().setPrefHeight(2);
 
@@ -25,8 +23,12 @@ public class FormInputText extends FormContainer{
         getFormContainer().setSpacing(0);
     }
 
-     public TextField getInput(){
+    public ComboBox getInput(){
         return  input;
     }
+
+    protected abstract  Object[] setItems();
+
+    
     
 }

@@ -91,7 +91,7 @@ public abstract class FormView extends View {
 
     protected abstract void addActionsToCreateButton();
 
-    protected Button getCreateButton() {
+    public Button getCreateButton() {
         return createButton;
     }
     
