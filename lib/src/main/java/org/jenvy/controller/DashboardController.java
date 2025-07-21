@@ -11,6 +11,7 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
     protected final DashboardInteractor interactor;
 
     //Controllers
+    // Used to intiate four controllers of each CRUD action
     protected  final IndexController indexController;
     protected  final CreateController createController;
     protected  final EditController editController;

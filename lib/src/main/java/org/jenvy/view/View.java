@@ -21,5 +21,6 @@ public abstract  class View implements Builder<Region> {
     }
 
     protected abstract Model getModel();
+    protected abstract Interactor getInteractor();
     
 }

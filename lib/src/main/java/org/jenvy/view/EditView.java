@@ -17,6 +17,11 @@ public abstract class EditView extends FormView{
     protected EditModel getModel(){
         return (EditModel)model;
     }
+    
+    @Override
+    protected  EditInteractor getInteractor(){
+      return (EditInteractor) interactor;
+    }
 
 
     

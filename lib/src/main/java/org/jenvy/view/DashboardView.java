@@ -61,4 +61,9 @@ public abstract  class DashboardView extends View {
     protected DashboardModel getModel(){
         return (DashboardModel)model;
     }
+
+    @Override
+     protected  DashboardInteractor getInteractor(){
+        return (DashboardInteractor) interactor;
+     }
 }

@@ -17,4 +17,10 @@ public abstract class ShowView extends FormView{
     protected ShowModel getModel(){
         return (ShowModel)model;
     }
+
+        
+    @Override
+    protected  ShowInteractor getInteractor(){
+      return (ShowInteractor) interactor;
+    }
 }

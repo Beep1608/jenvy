@@ -78,8 +78,8 @@ public abstract class FormView extends View {
 
     protected abstract void addFieldsToSpecialDataContainer();
 
-    private void addCreateButton(){
-         createButton = new Button("Crear");
+    protected  void addCreateButton(){
+        createButton = new Button("Crear");
         createButton.getStyleClass().add("create-button");
         createButton.setOnMouseClicked(event -> {
             
@@ -93,6 +93,10 @@ public abstract class FormView extends View {
 
     public Button getCreateButton() {
         return createButton;
+    }
+
+    protected VBox getMainContainer(){
+        return mainContainer;
     }
     
 }
