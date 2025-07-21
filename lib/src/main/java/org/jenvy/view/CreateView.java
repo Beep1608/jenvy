@@ -15,5 +15,10 @@ public abstract  class CreateView extends FormView {
    protected CreateModel getModel(){
       return (CreateModel)model;
    }
+   
+   @Override
+   protected  CreateInteractor getInteractor(){
+      return (CreateInteractor) interactor;
+   }
 
 }

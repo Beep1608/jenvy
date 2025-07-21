@@ -8,6 +8,7 @@
     exports org.jenvy.model;
     exports org.jenvy.dto;
     exports org.jenvy.components;
+    exports org.jenvy.utils;
     exports org.jenvy;
     
 }
