@@ -21,7 +21,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
        
         listeners();
         bindings();
-       System.out.println("Controlador index");
+    
        
     }
 
@@ -40,7 +40,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
     protected  void listeners(){
 
         model.visible().addListener((obs, oldVal, newValue) ->{
-            System.out.println("Modelo index nuevo valor : "+ newValue);
+            
         });
 
         model.items().addListener((ListChangeListener)change->{
@@ -55,7 +55,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
 
         model.index().addListener((observable, oldValue, newValue) -> { 
             
-            System.out.println("Cambio index :"+ newValue);
+           
             if(model.search().get().equals("")){
                 interactor.updatePagination();
                 if (view.getPagination().getCurrentPageIndex() != newValue.intValue()) {
@@ -69,14 +69,14 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
         });
         
         model.search().addListener((obs, oldVal, newValue)->{
-            System.out.println("Nuevo valor: "+ newValue);
+           
             interactor.search(newValue);
         });
 
     }
     @Override
     protected void bindings(){
-      System.out.println("BINDINGS EN INDEX");
+     
         view.build().visibleProperty().bind(model.visible());
     }
 

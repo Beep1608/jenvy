@@ -37,14 +37,14 @@ public abstract  class CreateController extends Controller<CreateModel, CreateIn
     protected void listeners() {
              
           model.visible().addListener((obs, oldVal, newValue) ->{
-            System.out.println("Modelo create nuevo valor : "+ newValue);
+           
         });
     }
      @Override
     protected void bindings(){
-      System.out.println("BINDINGS EN CREATE");
+    
         view.build().visibleProperty().bind(model.visible());
-        System.out.println("CREATE : "+ view.build().visibleProperty());
+        
     }
 
     

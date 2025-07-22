@@ -20,6 +20,6 @@ public abstract  class Controller<M extends Model, I extends Interactor, V exten
 
     public abstract I getInteractor();
 
-    public abstract  View getView();
+    public abstract  V getView();
 
 }

@@ -29,16 +29,16 @@ public abstract  class EditController extends Controller<EditModel, EditInteract
     @Override
     protected void listeners() {
           model.visible().addListener((obs, oldVal, newValue) ->{
-            System.out.println("Modelo edit nuevo valor : "+ newValue);
+            
         });
     }
 
     
     @Override
     protected void bindings(){
-        System.out.println("BINDINGS EN EDIT");
+        
         view.build().visibleProperty().bind(model.visible());
-        System.out.println("EDIT: "+ view.build().visibleProperty());
+        
     }
 
     

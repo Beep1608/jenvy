@@ -1,6 +1,8 @@
 package org.jenvy.components;
 import java.io.File;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,7 +12,7 @@ public class FormFileUpload extends FormContainer {
 
     private ImageView imagePreview;
     private Button uploadButton;
-    private String imagePath; // ← Atributo para guardar la ruta de la imagen
+    private final  SimpleStringProperty imagePath  = new SimpleStringProperty(""); // ← Atributo para guardar la ruta de la imagen
 
     public FormFileUpload(String title) {
         super(title);
@@ -39,7 +41,7 @@ public class FormFileUpload extends FormContainer {
             File selectedFile = fileChooser.showOpenDialog(window);
 
             if (selectedFile != null) {
-                imagePath = selectedFile.getAbsolutePath(); // ← Guardar la ruta
+                imagePath.set(selectedFile.getAbsolutePath()); // ← Guardar la ruta
                 Image image = new Image(selectedFile.toURI().toString());
                 imagePreview.setImage(image);
                 System.out.println(getImagePath());
@@ -53,7 +55,7 @@ public class FormFileUpload extends FormContainer {
     /**
      * Método público para obtener la ruta de la imagen seleccionada
      */
-    public String getImagePath() {
+    public StringProperty getImagePath() {
         return imagePath;
     }
 }

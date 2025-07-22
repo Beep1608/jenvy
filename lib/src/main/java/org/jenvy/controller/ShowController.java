@@ -18,7 +18,7 @@ public abstract class ShowController extends Controller<ShowModel, ShowInteracto
 
         listeners();
         this.bindings();
-        System.out.println("Show controller");
+ 
     }
 
     protected abstract ShowModel initModel();
@@ -29,15 +29,15 @@ public abstract class ShowController extends Controller<ShowModel, ShowInteracto
     @Override
     protected void listeners() {
            model.visible().addListener((obs, oldVal, newValue) ->{
-            System.out.println("Modelo show nuevo valor : "+ newValue);
+           
         });
     }
 
     @Override
     protected void bindings(){
-        System.out.println("BINDINGS DE SHOW");
+        
         view.build().visibleProperty().bind(model.visible());
-        System.out.println("Visible show : "+ view.build().visibleProperty());
+        
     }
 
     

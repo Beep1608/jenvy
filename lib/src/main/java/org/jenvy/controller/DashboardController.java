@@ -39,19 +39,19 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
     protected abstract EditController editController();
     protected abstract ShowController showController();
 
-    protected IndexController getIndexController(){
+    public IndexController getIndexController(){
         return indexController;
     }
 
-    protected CreateController getCreateController(){
+    public CreateController getCreateController(){
         return createController;
     }
 
-    protected EditController getEditController(){
+    public EditController getEditController(){
         return editController;
     }
 
-    protected ShowController getShowController(){
+    public ShowController getShowController(){
         return showController;
     }
     
