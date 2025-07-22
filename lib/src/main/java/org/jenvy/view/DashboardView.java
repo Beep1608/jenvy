@@ -30,10 +30,6 @@ public abstract  class DashboardView extends View {
         this.editView = editView;
         this.showView = showView;
 
-        System.out.println("Index :" + indexView );
-        System.out.println("Create :" + createView );
-        System.out.println("Edit :" + editView );
-        System.out.println("Show :" + showView );
         this.container = new StackPane(
             indexView.build(),
             createView.build(),
