@@ -86,7 +86,7 @@ public abstract  class IndexController extends Controller<IndexModel, IndexInter
     }
 
     @Override
-    public IndexModel getModel() {
+    public  IndexModel getModel() {
         return model;
     }
 

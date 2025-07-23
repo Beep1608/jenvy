@@ -1,7 +1,9 @@
 package org.jenvy.controller;
 
+import org.jenvy.dto.Dto;
 import org.jenvy.interactor.DashboardInteractor;
 import org.jenvy.model.DashboardModel;
+import org.jenvy.model.EditModel;
 import org.jenvy.view.DashboardView;
 
 public abstract  class DashboardController extends Controller<DashboardModel, DashboardInteractor, DashboardView> {
@@ -108,10 +110,16 @@ public abstract  class DashboardController extends Controller<DashboardModel, Da
         });
 
         indexController.getView().getEditButton().setOnAction(value->{
+            fillEditModel(getEditController().getModel(), 
+            (Dto) (getIndexController().getModel().selectedItem().get())
+            );
             model.edit().set(true);
         });
 
     }
+
+    protected abstract  void fillEditModel(EditModel model, Dto dto );
+    protected abstract  void fillShowModel(EditModel model, Dto dto );
 
     @Override
     public DashboardModel getModel() {

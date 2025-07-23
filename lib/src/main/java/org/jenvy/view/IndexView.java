@@ -48,6 +48,7 @@ public abstract  class IndexView extends View {
 
         paginate();
         addToContainers();
+  
     }
 
     @Override
@@ -65,6 +66,13 @@ public abstract  class IndexView extends View {
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table_local.getStyleClass().add("table-view");
+        table_local.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
+            System.out.println("El nuevo dto es:" + newValue.searcheable());
+            if(newValue != null){
+                getModel().selectedItem().set(newValue);
+                System.out.println("Nuevo modelo en modelo ejeje: "+ getModel().selectedItem().get());
+            }
+        });
         return table_local;
     }
 
@@ -148,6 +156,8 @@ public abstract  class IndexView extends View {
     protected abstract <D extends Dto>  List<TableColumn<D, ?>> createColumns();
     protected abstract Button createButton();
     protected abstract Button editButton();
+
+   
 
     public Button getCreateButton(){
         return  createButton;

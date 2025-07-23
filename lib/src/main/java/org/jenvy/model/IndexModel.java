@@ -5,8 +5,10 @@ package org.jenvy.model;
 import org.jenvy.dto.Dto;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.transformation.FilteredList;
@@ -19,7 +21,7 @@ public abstract class IndexModel<D extends Dto> extends Model {
     private final SimpleIntegerProperty pagination = new SimpleIntegerProperty(10);
     private final SimpleIntegerProperty pageCount = new SimpleIntegerProperty(1);
     private final SimpleIntegerProperty index  = new SimpleIntegerProperty(0);
-
+    private final SimpleObjectProperty<D> selectedItem = new SimpleObjectProperty<>();
     public IndexModel() { }
 
     public SimpleListProperty<D> items() {
@@ -48,6 +50,9 @@ public abstract class IndexModel<D extends Dto> extends Model {
 
     public StringProperty search(){
         return search;
+    }
+    public ObjectProperty<D> selectedItem(){
+        return selectedItem;
     }
     
 
