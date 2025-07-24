@@ -6,8 +6,8 @@ import org.jenvy.model.CreateModel;
 
 public abstract  class CreateView extends FormView {
 
-   public CreateView (CreateModel model, CreateInteractor interactor){
-    super(model, interactor);
+   public CreateView (CreateModel model){
+    super(model);
 
    }
 
@@ -16,9 +16,6 @@ public abstract  class CreateView extends FormView {
       return (CreateModel)model;
    }
    
-   @Override
-   protected  CreateInteractor getInteractor(){
-      return (CreateInteractor) interactor;
-   }
+
 
 }

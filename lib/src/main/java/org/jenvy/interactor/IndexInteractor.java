@@ -33,7 +33,7 @@ public class IndexInteractor extends Interactor{
 
     public void createFilteredPage(Integer index){
         try {
-            
+            System.out.println("Chetos");
             int fromIndex = (int)index * getModel().pagination().get();
             int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().searchedItems().size());
             getModel().tempItems().set(
@@ -65,13 +65,17 @@ public class IndexInteractor extends Interactor{
     public void search(String text){
   
         if(!text.equals("")){
+            System.out.println("Chetos1");
             getModel().searchedItems().setPredicate(item -> ((Dto)item).searcheable().toLowerCase().contains(text));
             updateFilteredPagination();
             return;
         }
         if(text.equals("") && getModel().index().get()!= 0){
+             System.out.println("Chetos2");
             getModel().index().set(0);
         }else{
+
+             System.out.println("Chetos3");
             updatePagination();
         }
     }

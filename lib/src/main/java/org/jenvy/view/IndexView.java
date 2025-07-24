@@ -4,11 +4,11 @@ package org.jenvy.view;
 import java.util.List;
 
 import org.jenvy.dto.Dto;
-import org.jenvy.interactor.IndexInteractor;
 import org.jenvy.model.IndexModel;
 
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -32,8 +32,8 @@ public abstract  class IndexView extends View {
     protected HBox topContainer;
     protected TextField searchField;
 
-    public IndexView(IndexModel model ,  IndexInteractor interactor){
-        super(model, interactor);
+    public IndexView(IndexModel model ){
+        super(model);
         this.searchField = createSearchField();
         this.searchFieldContainer = createSearchFieldContainer();
         this.createButton = createButton();
@@ -45,9 +45,10 @@ public abstract  class IndexView extends View {
         container.getStylesheets().add(
             IndexView.class.getResource("/org/jenvy/styles.css").toExternalForm()
         );
-
+        
         paginate();
         addToContainers();
+        listeners();
   
     }
 
@@ -61,7 +62,8 @@ public abstract  class IndexView extends View {
        TableView<D> table_local = new TableView<>();
         table_local.setItems( 
             FXCollections.observableArrayList( 
-            ((IndexModel)model).tempItems())
+                getModel().tempItems()
+            )
         );
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
@@ -73,6 +75,7 @@ public abstract  class IndexView extends View {
                 System.out.println("Nuevo modelo en modelo ejeje: "+ getModel().selectedItem().get());
             }
         });
+
         return table_local;
     }
 
@@ -89,7 +92,8 @@ public abstract  class IndexView extends View {
     }
     private void paginate(){
         pagination.setPageFactory(pageIndex ->{
-           ((IndexModel)model).index().set(pageIndex);
+            System.out.println("Page : " + pageIndex);
+           getModel().index().set(pageIndex);
             return  createTable();
         });
     }
@@ -171,6 +175,105 @@ public abstract  class IndexView extends View {
     protected IndexModel getModel(){
         return (IndexModel)model;
     }
+
+    public void listeners(){
+                
     
+        model.visible().addListener((obs, oldVal, newValue) ->{
+            
+        });
+
+        getModel().items().addListener((ListChangeListener)change->{
+           
+            while (change.next()) {
+                updatePagination();
+            }
+        });
     
+
+        getModel().index().addListener((obs, oldVal, newValue) ->{
+            if(getModel().search().get().equals("")){
+                updatePagination();
+            }
+        });
+
+        searchProperty().addListener((obs, oldVal, newValue) ->{
+            search(newValue);
+        });
+
+    }
+
+
+    //Interactor
+
+
+    public void updateFilteredPagination(){
+        int pageCount = (int) Math.ceil((double) getModel().searchedItems().size() / getModel().pagination().get());
+        
+        getModel().pageCount().set(Math.max(pageCount, 1));
+        getModel().index().set(0);
+       
+        int index = getModel().index().get();
+
+         try {
+            
+            int fromIndex = (int)index * getModel().pagination().get();
+            int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().searchedItems().size());
+            getModel().tempItems().set(
+                FXCollections.observableArrayList(
+                    getModel().searchedItems().subList(fromIndex, toIndex)
+                )
+            );
+           getPagination().setPageCount(pageCount);
+
+        } catch (Exception e) {
+        
+            System.out.println("Error:");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void updatePagination() {
+        System.out.println("Index : "+ getModel().index());
+        int pageCount = (int) Math.ceil((double) getModel().items().size() / getModel().pagination().get());
+        getModel().pageCount().set(Math.max(pageCount, 1));
+        int index = getModel().index().get();
+        try {
+            
+            int fromIndex = (int)index * getModel().pagination().get();
+            int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().items().size());
+            getModel().tempItems().set(
+               FXCollections.observableArrayList(
+                    getModel().items().subList(fromIndex, toIndex)
+                )
+            );
+
+            getPagination().setPageCount(pageCount);
+
+        } catch (Exception e) {
+        
+            System.out.println("Error:");
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void search(String text){
+  
+        if(!text.equals("")){
+            System.out.println("Chetos1");
+            getModel().searchedItems().setPredicate(item -> ((Dto)item).searcheable().toLowerCase().contains(text));
+            updateFilteredPagination();
+            System.out.println(" Searcheditems : "+ getModel().searchedItems().size());
+            return;
+        }
+        if(text.equals("") && getModel().index().get()!= 0){
+      
+            getModel().index().set(0);
+        }else{
+            
+            updatePagination();
+        }
+
+    
+    }
 }

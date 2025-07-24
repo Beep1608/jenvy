@@ -1,6 +1,5 @@
 package org.jenvy.components;
 
-import org.jenvy.interactor.Interactor;
 import org.jenvy.model.Model;
 import org.jenvy.utils.Responsive;
 import org.jenvy.view.View;
@@ -18,8 +17,8 @@ public abstract class FormView extends View {
     protected FormContainer generalDataCotainer;
     protected FormContainer specialDataContainer;
 
-    public FormView(Model model ,Interactor interactor){
-        super(model, interactor);
+    public FormView(Model model ){
+        super(model);
         init();
         makeView();
     }

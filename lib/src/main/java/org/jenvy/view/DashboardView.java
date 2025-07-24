@@ -1,6 +1,5 @@
 package org.jenvy.view;
 
-import org.jenvy.interactor.DashboardInteractor;
 import org.jenvy.model.DashboardModel;
 
 import javafx.scene.layout.Pane;
@@ -17,14 +16,13 @@ public abstract  class DashboardView extends View {
     private final Pane container;
 
     public  DashboardView (DashboardModel model,
-        DashboardInteractor interactor,
         IndexView indexView,  
         CreateView createView, 
         EditView editView, 
         ShowView showView
     ) 
     {
-        super(model, interactor);
+        super(model);
         this.indexView  = indexView;
         this.createView = createView;
         this.editView = editView;
@@ -37,9 +35,8 @@ public abstract  class DashboardView extends View {
             showView.build()
         );
     }
-    public DashboardView(DashboardModel model,
-        DashboardInteractor interactor,Region ...views){
-        super(model, interactor);
+    public DashboardView(DashboardModel model,Region ...views){
+        super(model);
         this.container = container();
         container.getChildren().addAll(views);
     
@@ -58,8 +55,5 @@ public abstract  class DashboardView extends View {
         return (DashboardModel)model;
     }
 
-    @Override
-     protected  DashboardInteractor getInteractor(){
-        return (DashboardInteractor) interactor;
-     }
+  
 }
