@@ -8,14 +8,9 @@ public abstract class EditView extends FormView{
 
 
     public EditView(EditModel model){
-        super(model);
+
     }
 
-
-    @Override
-    protected EditModel getModel(){
-        return (EditModel)model;
-    }
 
 
 

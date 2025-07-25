@@ -22,7 +22,7 @@ public abstract  class DashboardView extends View {
         ShowView showView
     ) 
     {
-        super(model);
+    
         this.indexView  = indexView;
         this.createView = createView;
         this.editView = editView;
@@ -36,7 +36,6 @@ public abstract  class DashboardView extends View {
         );
     }
     public DashboardView(DashboardModel model,Region ...views){
-        super(model);
         this.container = container();
         container.getChildren().addAll(views);
     
@@ -50,10 +49,7 @@ public abstract  class DashboardView extends View {
         return container;
     }
     
-    @Override
-    protected DashboardModel getModel(){
-        return (DashboardModel)model;
-    }
+   
 
   
 }

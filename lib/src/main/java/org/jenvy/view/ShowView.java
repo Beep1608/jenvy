@@ -7,15 +7,9 @@ public abstract class ShowView extends FormView{
         
 
     public ShowView(ShowModel model){
-        super(model);
     }
 
   
-
-    @Override
-    protected ShowModel getModel(){
-        return (ShowModel)model;
-    }
 
 
 }

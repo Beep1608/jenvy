@@ -1,6 +1,5 @@
 package org.jenvy.components;
 
-import org.jenvy.model.Model;
 import org.jenvy.utils.Responsive;
 import org.jenvy.view.View;
 
@@ -10,32 +9,28 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-public abstract class FormView extends View {
+public abstract class FormView extends  View {
 
-    private final VBox mainContainer  =new VBox();
-    private final ScrollPane scrollPane = new ScrollPane(); 
+    private VBox mainContainer  =new VBox();
+    private ScrollPane scrollPane = new ScrollPane(); 
     protected FormContainer generalDataCotainer;
     protected FormContainer specialDataContainer;
 
-    public FormView(Model model ){
-        super(model);
-        init();
-        makeView();
-    }
    
     //Create 
-    private Button createButton;
+    protected  Button createButton;
+
+    protected  Button backButton;
     @Override
     public Region build() {
-        return scrollPane;
-    }
 
-    private void init(){
-
+       
         scrollPane.setContent(mainContainer);
         scrollPane.setFitToWidth(true);
         scrollPane.getStyleClass().add("buy-scroll");
-       Responsive.bindingToParentHeight(mainContainer, 1);
+        Responsive.bindingToParentHeight(mainContainer, 1);
+
+        return scrollPane;
     }
 
 
@@ -43,6 +38,11 @@ public abstract class FormView extends View {
         mainContainer.getStyleClass().add("buy");
         mainContainer.setPadding(new Insets(20, 150, 10, 200));
         mainContainer.setSpacing(20);
+        backButton = new Button("Regresar");
+        backButton.setOnAction((evt) -> {
+            addActionsToBackButton();
+        });
+        mainContainer.getChildren().add(backButton);
         createGeneralDataContainer();
         addFieldsToGeneralDataContainer();
 
@@ -53,7 +53,7 @@ public abstract class FormView extends View {
         addActionsToCreateButton();
     }
 
-    protected  void createGeneralDataContainer() {
+    private void createGeneralDataContainer() {
         generalDataCotainer = new FormContainer("Información General");
         
 
@@ -66,7 +66,7 @@ public abstract class FormView extends View {
     protected abstract void addFieldsToGeneralDataContainer();
     
 
-    protected  void createSpecialDataContainer() {
+    private void createSpecialDataContainer() {
         specialDataContainer = new FormContainer("Información Especial");
         specialDataContainer.setPrefHeight(300);
         specialDataContainer.getContentContainer().setSpacing(10);
@@ -77,7 +77,7 @@ public abstract class FormView extends View {
 
     protected abstract void addFieldsToSpecialDataContainer();
 
-    protected  void addCreateButton(){
+    private void addCreateButton(){
         createButton = new Button("Crear");
         createButton.getStyleClass().add("create-button");
         createButton.setOnMouseClicked(event -> {
@@ -89,13 +89,14 @@ public abstract class FormView extends View {
     }
 
     protected abstract void addActionsToCreateButton();
+    protected abstract void addActionsToBackButton();
 
-    public Button getCreateButton() {
+    protected Button getCreateButton() {
         return createButton;
     }
 
-    protected VBox getMainContainer(){
-        return mainContainer;
+    public Button getBackButton(){
+        return backButton;
     }
     
 }

@@ -32,8 +32,9 @@ public abstract  class IndexView extends View {
     protected HBox topContainer;
     protected TextField searchField;
 
-    public IndexView(IndexModel model ){
-        super(model);
+    protected IndexModel model;
+    public IndexView(IndexModel model){
+        this.model = model;
         this.searchField = createSearchField();
         this.searchFieldContainer = createSearchFieldContainer();
         this.createButton = createButton();
@@ -171,9 +172,9 @@ public abstract  class IndexView extends View {
         return editButton;
     }
 
-    @Override
+
     protected IndexModel getModel(){
-        return (IndexModel)model;
+        return  model;
     }
 
     public void listeners(){
