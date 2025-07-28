@@ -3,8 +3,6 @@ package org.jenvy.interactor;
 import org.jenvy.dto.Dto;
 import org.jenvy.model.IndexModel;
 
-import javafx.collections.FXCollections;
-
 public class IndexInteractor extends Interactor{
     
 
@@ -18,11 +16,11 @@ public class IndexInteractor extends Interactor{
             
             int fromIndex = (int)index * getModel().pagination().get();
             int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().items().size());
-            getModel().tempItems().set(
-               FXCollections.observableArrayList(
-                    getModel().items().subList(fromIndex, toIndex)
-                )
-            );
+           // getModel().tempItems().set(
+           //    FXCollections.observableArrayList(
+           //         getModel().items().subList(fromIndex, toIndex)
+           //     )
+           // );
 
         } catch (Exception e) {
         
@@ -36,11 +34,11 @@ public class IndexInteractor extends Interactor{
             System.out.println("Chetos");
             int fromIndex = (int)index * getModel().pagination().get();
             int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().searchedItems().size());
-            getModel().tempItems().set(
-                FXCollections.observableArrayList(
-                    getModel().searchedItems().subList(fromIndex, toIndex)
-                )
-            );
+            //getModel().tempItems().set(
+            //    FXCollections.observableArrayList(
+            //        getModel().searchedItems().subList(fromIndex, toIndex)
+            //    )
+            //);
 
         } catch (Exception e) {
         

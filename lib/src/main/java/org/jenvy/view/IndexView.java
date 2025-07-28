@@ -7,7 +7,6 @@ import org.jenvy.dto.Dto;
 import org.jenvy.model.IndexModel;
 
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,7 +24,7 @@ public abstract  class IndexView extends View {
     protected final Pagination pagination = new Pagination();
     private final Button editButton;
     private final Button createButton;
-    protected final TableView<Dto> table;
+
     protected final VBox container;
     protected HBox buttonsContainer;
     protected HBox searchFieldContainer;
@@ -40,7 +39,6 @@ public abstract  class IndexView extends View {
         this.createButton = createButton();
         this.editButton = editButton();
         this.topContainer = createTopContainer();
-        this.table= createTable();
         this.buttonsContainer = createButtonsContainer();
         this.container = createMainContainer();
         container.getStylesheets().add(
@@ -62,16 +60,15 @@ public abstract  class IndexView extends View {
         
        TableView<D> table_local = new TableView<>();
         table_local.setItems( 
-            FXCollections.observableArrayList( 
-                getModel().tempItems()
-            )
+           getModel().tempItems()
         );
         table_local.getColumns().setAll(createColumns());
         table_local.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         table_local.getStyleClass().add("table-view");
         table_local.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
-            System.out.println("El nuevo dto es:" + newValue.searcheable());
+            
             if(newValue != null){
+                System.out.println("El nuevo dto es:" + newValue.searcheable());
                 getModel().selectedItem().set(newValue);
                 System.out.println("Nuevo modelo en modelo ejeje: "+ getModel().selectedItem().get());
             }
@@ -82,10 +79,6 @@ public abstract  class IndexView extends View {
 
     public Pagination getPagination(){
         return  pagination;
-    }
-
-    protected  TableView<Dto> getTableView(){
-        return table;
     }
 
     public StringProperty searchProperty(){
@@ -186,9 +179,8 @@ public abstract  class IndexView extends View {
 
         getModel().items().addListener((ListChangeListener)change->{
            
-            while (change.next()) {
-                updatePagination();
-            }
+              updatePagination();
+
         });
     
 
@@ -220,11 +212,7 @@ public abstract  class IndexView extends View {
             
             int fromIndex = (int)index * getModel().pagination().get();
             int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().searchedItems().size());
-            getModel().tempItems().set(
-                FXCollections.observableArrayList(
-                    getModel().searchedItems().subList(fromIndex, toIndex)
-                )
-            );
+            getModel().updateTempItems(getModel().searchedItems().subList(fromIndex, toIndex));
            getPagination().setPageCount(pageCount);
 
         } catch (Exception e) {
@@ -243,13 +231,13 @@ public abstract  class IndexView extends View {
             
             int fromIndex = (int)index * getModel().pagination().get();
             int toIndex = Math.min(fromIndex + getModel().pagination().get(), getModel().items().size());
-            getModel().tempItems().set(
-               FXCollections.observableArrayList(
-                    getModel().items().subList(fromIndex, toIndex)
-                )
-            );
+
+            getModel().updateTempItems(getModel().items().subList(fromIndex, toIndex));
+            System.out.println("Form index :" + fromIndex);
+            System.out.println("to index :" + toIndex);
 
             getPagination().setPageCount(pageCount);
+            
 
         } catch (Exception e) {
         
