@@ -1,55 +1,27 @@
 package org.jenvy.view;
 
-import org.jenvy.model.DashboardModel;
-
-import javafx.scene.layout.Pane;
+import atlantafx.base.controls.ModalPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.util.Builder;
+import org.jenvy.components.SideBar;
+import org.jenvy.model.DashboardModel;
 
-public abstract  class DashboardView extends View {
+public abstract class DashboardView extends AnchorPane {
 
-    protected   IndexView indexView;
-    protected   CreateView createView;
-    protected   EditView editView;
-    protected   ShowView showView; 
+    static final int PAGE_TRANSITION_DURATION = 500;
 
-    private final Pane container;
 
-    public  DashboardView (DashboardModel model,
-        IndexView indexView,  
-        CreateView createView, 
-        EditView editView, 
-        ShowView showView
-    ) 
-    {
-    
-        this.indexView  = indexView;
-        this.createView = createView;
-        this.editView = editView;
-        this.showView = showView;
+    private final SideBar sideBar;
 
-        this.container = new StackPane(
-            indexView.build(),
-            createView.build(),
-            editView.build(),
-            showView.build()
-        );
-    }
-    public DashboardView(DashboardModel model,Region ...views){
-        this.container = container();
-        container.getChildren().addAll(views);
-    
+
+
+    public DashboardView(){
+        this.sideBar = new SideBar();
+        getChildren().add(sideBar);
     }
 
-    protected abstract  Pane container();
 
-    @Override
-    public Region build() {
-       
-        return container;
-    }
     
-   
-
-  
 }

@@ -24,12 +24,17 @@ dependencies {
     testImplementation(libs.junit.jupiter)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("io.github.mkpaz:atlantafx-base:2.1.0")
+    implementation("org.jetbrains:annotations:24.1.0")
+    implementation("org.kordamp.ikonli:ikonli-javafx:12.4.0")
+    implementation("org.kordamp.ikonli:ikonli-boxicons-pack:12.4.0")
 
     // This dependency is exported to consumers, that is to say found on their compile classpath.
    // api(libs.commons.math3)
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation(libs.guava)
+        implementation("io.github.mkpaz:atlantafx-base:2.1.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

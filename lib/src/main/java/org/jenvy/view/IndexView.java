@@ -25,6 +25,7 @@ public abstract  class IndexView extends View {
     private final Button editButton;
     private final Button createButton;
 
+
     protected final VBox container;
     protected HBox buttonsContainer;
     protected HBox searchFieldContainer;

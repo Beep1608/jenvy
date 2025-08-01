@@ -1,0 +1,77 @@
+package org.jenvy.events;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Consumer;
+
+public final class DefaultEventBus implements EventBus {
+
+    private final Map<Class<?>, Set<Consumer>> subscribers = new ConcurrentHashMap<>();
+
+
+    @Override
+    public <E extends Event> void subscribe(Class<? extends E> eventType, Consumer<E> subscriber) {
+        Objects.requireNonNull(eventType);
+        Objects.requireNonNull(subscriber);
+
+        Set<Consumer> eventSubscribers = getOrCreateSubscribers(eventType);
+        eventSubscribers.add(subscriber);
+
+    }
+
+    private <E> Set<Consumer> getOrCreateSubscribers(Class<E> eventType){
+        Set<Consumer> eventSubscribers = subscribers.get(eventType);
+        if(eventSubscribers == null){
+            eventSubscribers =  new CopyOnWriteArraySet<>();
+            subscribers.put(eventType,eventSubscribers);
+        }
+
+        return eventSubscribers;
+    }
+
+    @Override
+    public <T extends Event> void unsubscribe(Consumer<T> subscriber) {
+        Objects.requireNonNull(subscriber);
+    }
+
+    @Override
+    public <T extends Event> void unsubscribe(Class<? extends T> eventType, Consumer<T> subscriber) {
+        Objects.requireNonNull(eventType);
+        Objects.requireNonNull(subscriber);
+
+        subscribers.keySet().stream().filter(eventType::isAssignableFrom)
+                .map(subscribers::get)
+                .forEach(eventSubscribers -> eventSubscribers.remove(subscriber));
+    }
+
+    @Override
+    public <T extends Event> void publish(T event) {
+        Objects.requireNonNull(event);
+
+        Class<?> eventType = event.getClass();
+        subscribers.keySet().stream()
+                .filter(eventType::isAssignableFrom)
+                .flatMap(type -> subscribers.get(type).stream())
+                .forEach(subscriber -> publish(event,subscriber));
+
+    }
+
+    private <E extends Event> void publish(E event, Consumer<E> subscriber){
+        try{
+            subscriber.accept(event);
+        }catch (Exception e){
+            Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(),e);
+        }
+    }
+
+    private static class InstanceHolder{
+        private static final DefaultEventBus INSTANCE = new DefaultEventBus();
+    }
+
+    public static DefaultEventBus getInstance(){
+        return InstanceHolder.INSTANCE;
+    }
+}

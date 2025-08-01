@@ -2,7 +2,11 @@
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.swing;
-    exports org.jenvy.view;
+    requires atlantafx.base;
+    requires org.jetbrains.annotations;
+     requires org.kordamp.ikonli.javafx;
+     requires org.kordamp.ikonli.boxicons;
+     exports org.jenvy.view;
     exports org.jenvy.controller;
     exports org.jenvy.interactor;
     exports org.jenvy.model;
