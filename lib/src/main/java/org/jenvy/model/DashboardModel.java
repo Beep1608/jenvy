@@ -3,7 +3,7 @@ package org.jenvy.model;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import org.jenvy.components.NavTree;
-import org.jenvy.components.Page;
+import org.jenvy.view.router.Page;
 import org.jenvy.events.DefaultEventBus;
 import org.jenvy.events.NavEvent;
 

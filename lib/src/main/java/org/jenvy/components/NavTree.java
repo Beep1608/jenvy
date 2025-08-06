@@ -14,7 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import org.jenvy.utils.NodeUtils;
 import org.jenvy.view.AppWindow;
-import org.jenvy.view.DashboardView;
+import org.jenvy.view.router.Page;
 import org.jetbrains.annotations.Nullable;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -29,6 +29,10 @@ public final class NavTree extends TreeView<Nav> {
 
         getStyleClass().addAll(Tweaks.EDGE_TO_EDGE);
         setShowRoot(false);
+
+        getSelectionModel().selectedItemProperty();
+
+
         setCellFactory(p -> new NavTreeCell());
     }
 

@@ -1,8 +1,6 @@
 package org.jenvy.events;
 
-import javafx.event.EventTarget;
-import javafx.event.EventType;
-import org.jenvy.components.Page;
+import org.jenvy.view.router.Page;
 
 public class NavEvent extends Event {
     private final Class<? extends Page> page;

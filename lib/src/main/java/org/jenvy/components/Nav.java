@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.jenvy.view.router.Page;
 import org.jetbrains.annotations.Nullable;
 
 import javafx.scene.Node;
@@ -17,7 +18,7 @@ public record Nav(String title,
 
     public static final Nav ROOT = new Nav("ROOT", null, null, null);
 
-    private static  Set<Class<? extends Page>> TAGGED_PAGES ;
+    public static  Set<Class<? extends Page>> TAGGED_PAGES ;
 
     public Nav {
         Objects.requireNonNull(title, "title");
