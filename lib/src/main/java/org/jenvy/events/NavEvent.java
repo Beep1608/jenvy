@@ -1,15 +1,15 @@
 package org.jenvy.events;
 
-import org.jenvy.view.router.Page;
+import org.jenvy.view.router.IPage;
 
 public class NavEvent extends Event {
-    private final Class<? extends Page> page;
+    private final Class<? extends IPage> page;
 
-    public NavEvent(Class<? extends Page> page) {
+    public NavEvent(Class<? extends IPage> page) {
         this.page =page;
     }
 
-    public Class<? extends Page> getPage(){
+    public Class<? extends IPage> getPage(){
         return page;
     }
 

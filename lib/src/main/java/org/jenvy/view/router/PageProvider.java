@@ -1,6 +1,12 @@
 package org.jenvy.view.router;
 
-public interface PageProvider {
+public abstract class PageProvider {
 
-    public abstract Page nav(Class<? extends Page> pageClass);
+    protected final PageContainer container;
+
+    PageProvider(PageContainer container){
+        this.container = container;
+    }
+
+
 }
