@@ -1,13 +1,14 @@
 package org.jenvy.view.router;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 
 public interface IPageProvider {
 
-    ObjectProperty<Page> currentPage();
+    ReadOnlyObjectWrapper<Page> currentPage();
 
-    ObjectProperty<Page> prevPage();
+    ReadOnlyObjectWrapper<Page> prevPage();
     public  void nav(Class<? extends Page> page);
 
-    boolean isRegistered(Class<? extends Page> page);
+    boolean isAccesible(Class<? extends Page> page);
 }

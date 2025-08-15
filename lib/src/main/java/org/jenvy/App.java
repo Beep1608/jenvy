@@ -7,26 +7,22 @@ import java.util.Map;
 
 public class App {
 
-    private final IPageProvider provider;
-
-    private final IPageContainer container;
-
-    private final  DefaultPageFactory factory;
+    private final PageProvider provider;
 
     private Scene root ;
 
-    public App(Map<String, Class<? extends IPage>> pagesMap, Class<? extends IPage> defaultPage){
-
-        this.container = new DefaultPageContainer(pagesMap, defaultPage);
-        this.provider = new DefaultIPageProvider(container);
-        this.factory = new DefaultPageFactory(provider);
-        provider.nav(defaultPage.getName());
+    public App(PageProvider provider){
+        this.provider = provider;
         root = new Scene(provider.currentPage().get().view());
         provider.currentPage().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 root.setRoot(newValue.view());
             }
         });
+    }
+
+    public PageProvider provider(){
+        return provider;
     }
 
     public Scene scene(){

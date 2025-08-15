@@ -7,7 +7,8 @@
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.boxicons;
     requires javafx.base;
-    exports org.jenvy.view;
+
+     exports org.jenvy.view;
     exports org.jenvy.controller;
     exports org.jenvy.interactor;
     exports org.jenvy.model;

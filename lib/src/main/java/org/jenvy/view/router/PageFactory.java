@@ -1,8 +1,30 @@
 package org.jenvy.view.router;
 
-public interface PageFactory {
+import java.util.function.Consumer;
 
-    IPage page(Class<? extends IPage> pageClass, IPageProvider provider) throws Exception;
+public abstract  class PageFactory implements IPageFactory {
 
-    IPage reset(IPage IPage);
+
+
+    public PageFactory(){
+
+    }
+
+    @Override
+    public Page page(Class<? extends Page> pageClass, Consumer<Class<? extends Page>> nav) throws Exception {
+        System.out.println("AbstractPageFctory -> " + pageClass.getName() );
+        Page page =  (Page)  pageClass.getDeclaredConstructor().newInstance();
+        System.out.println("Nombre Page: "+ page.toString());
+        page.setNav(nav);
+
+      return page;
+    }
+
+    @Override
+    public Page reset(Page page) {
+        page.reset();
+        return page;
+    }
+
+
 }
