@@ -9,11 +9,16 @@ import java.util.Set;
 
 public abstract class PageContainer {
 
-    public PageContainer(Page defaultPage){
-        pages.add(defaultPage);
+    public PageContainer(){
     }
 
     private final Set<Page> pages = new HashSet<>();
+    public void addPage(Page page){
+        if(!pages.contains(page)){
+            pages.add(page);
+            System.out.println("Se agregó correctamente la Page : "+ page.name());
+        }
+    }
     protected Class<? extends Page> defaultPageClass;
 
     private final ReadOnlyObjectWrapper<Page> currentPage = new ReadOnlyObjectWrapper<>();

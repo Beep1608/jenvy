@@ -5,7 +5,6 @@ import java.util.Map;
 
 public final class DefaultPageContainer extends PageContainer {
 
-    public DefaultPageContainer(Page defaultPage) {
-        super(defaultPage);
+    public DefaultPageContainer() {
     }
 }

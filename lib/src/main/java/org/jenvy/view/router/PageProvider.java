@@ -8,36 +8,41 @@ public abstract class PageProvider implements IPageProvider{
     protected final PageContainer container;
     protected final PageFactory factory;
 
-    PageProvider(PageContainer container, PageFactory factory){
+    PageProvider(PageContainer container, PageFactory factory, Page defaultPage){
         this.container = container;
         this.factory = factory;
+        container.addPage(defaultPage);
+        defaultPage.setNav(this::nav);
+        nav(defaultPage.getClass());
     }
 
 
 
     @Override
     public void nav(Class<? extends Page> pageClass){
-        if (isAccesible(pageClass)) {
-            System.out.println("Si es accesble");
-            Page page = container.get(pageClass);
+        System.out.println("Navegando......");
 
-            if ( page != null){
-                container.setCurrentPage(page);
+        System.out.println("Intentando acceder....");
+        Page page = container.get(pageClass);
+        if ( page == null){
+            try{
+                Page newPage = factory.page(pageClass, this::nav);
+                container.addPage(newPage);
+                System.out.println("Se creo correctamente la Page: "+newPage.name());
+                container.setCurrentPage(newPage);
+                return;
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
+        container.setCurrentPage(page);
+
+
         System.out.println("Navegación Hecha");
 
     }
 
-    @Override
-    public boolean isAccesible(Class<? extends Page> page){
-        Module pageModule = page.getModule();
-        String pkg = page.getPackageName();
 
-        return ModuleLayer.boot().modules().stream()
-                .filter(m -> m.equals(pageModule))
-                .anyMatch(m -> m.isExported(pkg));
-    }
 
     @Override
     public ReadOnlyObjectWrapper<Page> currentPage(){

@@ -9,6 +9,4 @@ public interface IPageProvider {
 
     ReadOnlyObjectWrapper<Page> prevPage();
     public  void nav(Class<? extends Page> page);
-
-    boolean isAccesible(Class<? extends Page> page);
 }
