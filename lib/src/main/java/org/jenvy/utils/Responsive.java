@@ -1,5 +1,6 @@
 package org.jenvy.utils;
 
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
@@ -46,14 +47,16 @@ public class Responsive {
     }
 
     public static void bindingToParentHeight(Region container, double percentageH) {
-     
         container.parentProperty().addListener((observable, oldParent, newParent) -> {
-            if (newParent != null && newParent instanceof Region) {
-        
-                container.prefHeightProperty().bind(((Region) newParent).heightProperty().multiply(percentageH));
-          }
-         });
-
+            if (newParent != null) {
+                if (newParent instanceof Region parentRegion) {
+                    container.prefHeightProperty().bind(parentRegion.heightProperty().multiply(percentageH));
+                } else if (newParent.getScene() != null) {
+                    // Escuchar a la escena si ya existe
+                    container.prefHeightProperty().bind(newParent.getScene().heightProperty().multiply(percentageH));
+                }
+            }
+        });
     }
 
 }

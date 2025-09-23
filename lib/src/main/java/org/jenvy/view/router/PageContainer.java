@@ -4,7 +4,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class PageContainer {
@@ -12,6 +14,7 @@ public abstract class PageContainer {
     public PageContainer(){
     }
 
+    final Map<Class<? extends Page>, Set<Class<? extends  Page>>> slides =  new HashMap<>();
     private final Set<Page> pages = new HashSet<>();
     public void addPage(Page page){
         if(!pages.contains(page)){
@@ -40,12 +43,19 @@ public abstract class PageContainer {
         currentPage.set(page);
     }
 
+    public void printAllPages(){
+        pages.stream().forEach(p -> System.out.println(p.name()));
+    }
     public Page get(Class< ? extends Page> pageClass){
         return pages.stream()
                 .filter(p -> p.getClass() == pageClass)
                 .findFirst()
                 .orElse(null);
 
+    }
+
+    public boolean isSlide(Class<? extends Page> pageClass ,Class<? extends Page> sliderClass){
+        return slides.containsKey(pageClass) && slides.get(pageClass).contains(sliderClass);
     }
 
 

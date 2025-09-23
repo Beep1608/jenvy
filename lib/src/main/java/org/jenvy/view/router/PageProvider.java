@@ -27,6 +27,7 @@ public abstract class PageProvider implements IPageProvider{
         if ( page == null){
             try{
                 Page newPage = factory.page(pageClass, this::nav);
+                newPage.setSlide(this::slide);
                 container.addPage(newPage);
                 System.out.println("Se creo correctamente la Page: "+newPage.name());
                 container.setCurrentPage(newPage);
@@ -39,6 +40,20 @@ public abstract class PageProvider implements IPageProvider{
 
 
         System.out.println("Navegación Hecha");
+
+    }
+
+    public void slide(Class<? extends Page> pageClass){
+        System.out.println("Sliding......");
+
+        container.printAllPages();
+        Page page = container.get(pageClass);
+        if(page == null){
+            System.out.println("No ha sido creada la vista");
+            return;
+        }
+
+        page.view().visibleProperty().set(false);
 
     }
 

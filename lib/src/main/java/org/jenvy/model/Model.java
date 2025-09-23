@@ -6,6 +6,4 @@ import org.jenvy.view.View;
 
 public abstract class Model {
 
-
-    public abstract Class<? extends View> getViewClass();
 }
